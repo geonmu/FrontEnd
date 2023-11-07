@@ -1,13 +1,13 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Login from '../pages/Login'
-import Diary from '../pages/Diary'
+import LoginPage from '../pages/LoginPage'
+import MinihompyPage from '../pages/MinihompyPage'
 
 function Router() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element = {<Login />} />
-                <Route path="/diary/*" element = {<Diary />} />
+                <Route path="/" element = {<LoginPage />} />
+                <Route path="/minihompy/*" element = {<MinihompyPage />} />
             </Routes>
         </BrowserRouter>
     );

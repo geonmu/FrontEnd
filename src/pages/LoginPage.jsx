@@ -7,7 +7,7 @@ function LoginPage({ children }) {
     <Backbase>
       {children}
       <SetBox>
-        <img src="/images/meta.png" alt="로그인로고" className="logoimg" />
+        <img src="/images/logo.png" alt="로그인로고" className="logoimg" />
         <SignBox>
         </SignBox>
       </SetBox>
