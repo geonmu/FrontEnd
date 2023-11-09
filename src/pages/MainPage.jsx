@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-function LoginPage({children}) {
+function LoginPage() {
 
   return (
   <Background>
@@ -9,10 +9,10 @@ function LoginPage({children}) {
         <BookDot>
           <ContentBox>
             <LogoBox>
-              <img src="/images/logo2.png" alt="logo"/>
+              <img src="/images/logo.png" alt="logo"/>
             </LogoBox>
             <LoginBox>
-              {children}
+              asdf
             </LoginBox>
           </ContentBox>
         </BookDot>
@@ -44,7 +44,7 @@ const BookCover = styled.div`
     border: 2px solid #374851;
     box-shadow: 5px 5px 5px rgb(0, 0, 0, 0.3);
 
-    width: 800px;
+    width: 650px;
     height: 500px;
     margin: 100px auto;
 
@@ -76,12 +76,18 @@ const ContentBox = styled.div`
   padding: 12px 9px 12px 9px;
 
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 2fr 3fr;
-  justify-items: center;
+  grid-template-columns: 100%;
+  grid-template-rows: 25% 75%;
 
   position: absolute;
   
+`;
+
+const LogoBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
 `;
 
 const LoginBox = styled.div`
@@ -91,14 +97,5 @@ const LoginBox = styled.div`
   border: 2px solid #b3b3b3;
   box-shadow: inset 0 0 0 6px hsl(0, 0%, 90%);
 
-  width: 100%;
-  height: 100%;
-
-`;
-
-//로그인 회원가입 박스
-
-const LogoBox = styled.div`
-display: flex;
-align-items: flex-end;
+  padding: 25px 60px 25px 60px;
 `;
