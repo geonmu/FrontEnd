@@ -14,16 +14,15 @@ function Profile() {
             <div>
                 <DottedLine />
                 <TodayIs>
-                    <p><span style={{ color: '#387291' }}>TODAY IS...</span></p>&nbsp;졸림
+                    <span className='layoutText' style={{ color: '#387291' }}>TODAY IS...</span>&nbsp;&nbsp;졸림
                 </TodayIs>
             </div>
             <div>
                 <BodyText>인트로 최대 4줄<br/>ㅎㅇ<br/>테스트g<br/>test</BodyText>
             </div>
             <div>
-                <History>
-                    <p>
-                        <span style={{ color: '#468baf' }}>▶</span>History</p>
+                <History className='layoutText'>
+                        <span style={{ color: '#468baf' }}>▶</span>History
                 </History>
                 <BodyText>
                     <span style={{ color: '#595959' }}>이건무</span>

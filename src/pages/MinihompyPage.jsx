@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Profile from '../components/Profile'
+import Profile from '../components/Profile';
+import Home from '../components/Home';
+import Guestbook from '../components/Guestbook';
 
 function MinihompyPage() {
-    const [content, setContent] = useState();
+    const [content, setContent] = useState("home");
 
     const handleClickButton = e => {
         const { name } = e.target;
         setContent(name);
     };
 
-    /*
     const selectComponent = {
-        main: <Main />,
-        diary: <Diary />,
+        home: <Home />,
         guestbook: <Guestbook />,
     };
-    */
-
 
     return (
     <Background>
         <BookCover>
             <BookDot>
                 <ProfileBox>
-                    <HeadText style={{ justifyContent: 'center' }}>
+                    <HeadText className='layoutText' style={{ justifyContent: 'center' }}>
                         <p>TODAY<span style={{ color: '#a96a6a' }}> 12</span> | TOTAL 34</p>
                     </HeadText>
                     <InnerProfileBox>
@@ -32,18 +30,30 @@ function MinihompyPage() {
                     </InnerProfileBox>
                 </ProfileBox>
                 <ContentBox>
-                    <ContentHead>
+                    <ContentHead className='layoutText'>
                         <HeadText style={{ justifyContent: 'left' }}>
-                            <p>TODAY<span style={{ color: '#a96a6a' }}> 12</span> | TOTAL 34</p>
+                            <span style={{ color: '#4882a1', fontSize: 24 }}>광운월드</span>
                         </HeadText>
                         <HeadText style={{ justifyContent: 'right' }}>
-                            <p>TODAY<span style={{ color: '#a96a6a' }}> 12</span> | TOTAL 34</p>
+                            <span style={{ fontSize: 14 }}>WELCOME TO KWWORLD!</span>
                         </HeadText>
                     </ContentHead>
-
-                    
                     <InnerContentBox>
-                        asdf
+                        <ContentArea>
+                            {content && <div>{selectComponent[content]}</div>}
+                        </ContentArea>
+                        <MenuArea className='layoutText'>
+                            <MenuButton
+                                className={content === 'home' ? 'active' : ''}
+                                onClick={handleClickButton} name='home'>
+                                홈
+                            </MenuButton>
+                            <MenuButton
+                                className={content === 'guestbook' ? 'active' : ''}
+                                onClick={handleClickButton} name='guestbook'>
+                                방명록
+                            </MenuButton>
+                        </MenuArea>
                     </InnerContentBox>
                 </ContentBox>
             </BookDot>
@@ -69,7 +79,7 @@ const Background = styled.div`
 `;
 
 const BookCover = styled.div`
-    background-color: #6faed4;
+    background-color: #69a6c9;
 
     border-radius: 12px;
     border: 2px solid #374851;
@@ -110,7 +120,7 @@ const ProfileBox = styled.div`
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 19fr;
+    grid-template-rows: 1fr 12fr;
     row-gap: 6px;
 `;
 
@@ -124,13 +134,13 @@ const ContentBox = styled.div`
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 19fr;
+    grid-template-rows: 1fr 12fr;
     row-gap: 6px;
 `;
 
 const ContentHead = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr;
 
     padding: 0px 8px 0px 8px;
@@ -166,24 +176,40 @@ const InnerContentBox = styled.div`
     border: 2px solid #b3b3b3;
     box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.2);
 
-    padding: 25px 90px 25px 90px;
-
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 3.5fr 1fr 2.25fr 2fr 0.75fr;
+    grid-template-columns: 100% 10%;
+    grid-template-rows: 1fr;
     row-gap: 3%;
 `;
 
-const Menu = styled.div`
-background-color: #ffffff;
+const ContentArea = styled.div`
+    padding: 25px 90px 25px 90px;
+`
 
-border-radius: 12px;
-border: 1px solid #374851;
+const MenuArea = styled.div`
+    padding: 50px 0px 50px 0px;
 
-padding: 15px 12px 15px 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 6fr;
+    row-gap: 3px;
+`;
 
-display: grid;
-grid-template-columns: 1fr;
-grid-template-rows: 1fr 19fr;
-row-gap: 6px;
+const MenuButton = styled.button`
+    font-size: 0.7rem;
+
+    color: #b9d8e5;
+    background-color: #238db4;
+    border: 3px solid #3f6c7c;
+    border-left: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.2);
+    cursor: pointer;
+
+    &.active {
+    color: #595959;
+    border-color: #b3b3b3;
+    background-color: #ffffff;
+    }
 `;

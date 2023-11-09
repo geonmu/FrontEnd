@@ -8,16 +8,16 @@ const GlobalStyles = createGlobalStyle`
         font-family: 'BBTreeGothic';
         line-height: 1;
         font-size: 1rem;
+        color : #444444;
     }
 
     /* 진한 회색(본문) */
-    p {
+    .layoutText {
         font-family: 'DungGeunMo';
-        color : #595959;
     }
 
-    .text {
-        line-height: 1.15;
+    .layoutText * {
+        font-family: inherit;
     }
 `;
 
