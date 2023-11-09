@@ -23,7 +23,7 @@ function MinihompyPage() {
             <BookDot>
                 <ProfileBox>
                     <HeadText className='layoutText' style={{ justifyContent: 'center' }}>
-                        <p>TODAY<span style={{ color: '#a96a6a' }}> 12</span> | TOTAL 34</p>
+                        <span>TODAY<span style={{ color: '#a96a6a' }}> 12</span> | TOTAL 34</span>
                     </HeadText>
                     <InnerProfileBox>
                         <Profile/>
@@ -39,10 +39,10 @@ function MinihompyPage() {
                         </HeadText>
                     </ContentHead>
                     <InnerContentBox>
-                        <ContentArea>
+                        <ContentSection>
                             {content && <div>{selectComponent[content]}</div>}
-                        </ContentArea>
-                        <MenuArea className='layoutText'>
+                        </ContentSection>
+                        <MenuSection className='layoutText'>
                             <MenuButton
                                 className={content === 'home' ? 'active' : ''}
                                 onClick={handleClickButton} name='home'>
@@ -53,7 +53,7 @@ function MinihompyPage() {
                                 onClick={handleClickButton} name='guestbook'>
                                 방명록
                             </MenuButton>
-                        </MenuArea>
+                        </MenuSection>
                     </InnerContentBox>
                 </ContentBox>
             </BookDot>
@@ -106,7 +106,7 @@ const BookDot = styled.div`
     padding: 5px 3px 5px 3px;
 
     display: grid;
-    grid-template-columns: 32% 68%;
+    grid-template-columns: 30% 70%;
     grid-template-rows: 100%;
 `;
 
@@ -165,7 +165,7 @@ const InnerProfileBox = styled.div`
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 3.5fr 1fr 2.25fr 2fr 0.75fr;
+    grid-template-rows: 4.25fr 0.75fr 2.5fr 1.75fr 0.75fr;
     row-gap: 3%;
 `;
 
@@ -182,11 +182,11 @@ const InnerContentBox = styled.div`
     row-gap: 3%;
 `;
 
-const ContentArea = styled.div`
-    padding: 25px 90px 25px 90px;
+const ContentSection = styled.div`
+    padding: 25px 60px 25px 60px;
 `
 
-const MenuArea = styled.div`
+const MenuSection = styled.div`
     padding: 50px 0px 50px 0px;
 
     display: grid;

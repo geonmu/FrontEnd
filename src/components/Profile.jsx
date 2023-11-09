@@ -14,20 +14,20 @@ function Profile() {
             <div>
                 <DottedLine />
                 <TodayIs>
-                    <span className='layoutText' style={{ color: '#387291' }}>TODAY IS...</span>&nbsp;&nbsp;졸림
+                    <span className='layoutText' style={{ color: '#4882a1' }}>TODAY IS...</span>&nbsp;&nbsp;최대여섯글자
                 </TodayIs>
             </div>
             <div>
-                <BodyText>인트로 최대 4줄<br/>ㅎㅇ<br/>테스트g<br/>test</BodyText>
+                <BodyText>인트로 최대 4줄ㅎㅇ<br/><br/>테스트g<br/>test</BodyText>
             </div>
             <div>
                 <History className='layoutText'>
-                        <span style={{ color: '#468baf' }}>▶</span>History
+                        <span style={{ color: '#4882a1' }}>▶</span>History
                 </History>
                 <BodyText>
-                    <span style={{ color: '#595959' }}>이건무</span>
+                    <span>이건무</span>
                     <span style={{ color: '#aaaaaa', fontSize: 14 }}> 2004.03.09</span><br/>
-                    <span style={{ color: "#ee8f4f" }}> 2leegm@naver.com</span>
+                    <span style={{ color: "#ee8f4f" }}> 소프트웨어학부 23학번</span>
                 </BodyText>
             </div>
             <div>
@@ -49,13 +49,14 @@ const TodayIs = styled.div`
     height: 75%;
     font-size: 1rem;
     background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 2px solid #d0d0ce;
 `;
 
 const ProfileImage = styled.img`
     width: 100%;
-    height: 100%;
+    aspect-ratio: 4 / 3;
+    max-height: 100%;
     border-radius: 12px;
     object-fit: cover;
 `;
@@ -70,7 +71,6 @@ const History = styled.div`
     border-bottom: 2px solid #dddddd;
     font-size: 0.8rem;
     font-weight: 600;
-    color: #1ea7cc;
 `;
 
 const Surfing = styled.div`
