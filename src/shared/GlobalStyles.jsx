@@ -24,7 +24,7 @@ const GlobalStyles = createGlobalStyle`
         --blue: #4a93ba;
     }
 
-    html, body, input, button {
+    html, body, input, button, select {
         font-family: 'NanumSquareRoundR';
         line-height: 1;
         font-size: 1rem;
@@ -40,6 +40,10 @@ const GlobalStyles = createGlobalStyle`
     input:focus {
         border: 2px solid var(--sky-blue);
         outline: none;
+    }
+
+    input[type='date']::before {
+        content: attr(placeholder);
     }
 
     button {
@@ -83,6 +87,12 @@ const GlobalStyles = createGlobalStyle`
         margin-top: 5px;
     }
 
+    .bookPaper {
+        background-color: white;
+        border-radius: 12px;
+        border: 1px solid var(--black);
+    }
+
     /* 프로필 이미지 */
     .profileImage {
         background-position: center center;
@@ -90,23 +100,6 @@ const GlobalStyles = createGlobalStyle`
         aspect-ratio: 4 / 3;
         border-radius: 12px;
         border: 1px solid var(--light-gray);
-    }
-
-    /* MainPage.jsx의 Background 애니메이션 */
-    @keyframes animateBackground {
-        from {
-            background-image: url('https://www.kw.ac.kr/KWData/webeditor/2020/2020_05_29_102245.jpg');
-        }
-        33% {
-            background-image: url('https://i.namu.wiki/i/FXdSpx0Bc4TtzcSBV3rGMEgo5k79yYMCXlLySKewhm5B02-qixbWlcZIdtqS1JIT10mZ3vcbOBZUt3dyrqEUlA.webp');
-        }
-
-        66% {
-            background-image: url('https://news.unn.net/bbs/download.php?table=bbs_22&savefilename=bbs_22_51784_1.jpg&filename=%EA%B4%91%EC%9A%B4%EB%8C%80%ED%95%99%EA%B5%90+%EC%BA%A0%ED%8D%BC%EC%8A%A4+%EC%A0%84%EA%B2%BD.jpg')
-        }
-        to {
-            background-image: url('https://www.kw.ac.kr/KWData/webeditor/2020/2020_05_29_102245.jpg');
-        }
     }
 `;
 

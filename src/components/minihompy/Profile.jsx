@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import ProfileImage from '../../images/profile_image.png'
 
-function surfingClick() {
+function surfingOnClick() {
     alert('pado');
 }
 
@@ -10,7 +10,7 @@ function Profile() {
     return(
         <ProfileBox>
             <div>
-                <img className='profileImage' src={ProfileImage} style={{ width: '100%' }}/>
+                <img className='profileImage' src={ProfileImage} alt='프로필사진' style={{ width: '100%' }}/>
             </div>
             <div>
                 <DottedLine />
@@ -32,7 +32,7 @@ function Profile() {
                 </div>
             </div>
             <div>
-                <button style={{ width: '100%', height: '100%' }}>파도타기 🌊</button>
+                <button onClick={surfingOnClick}style={{ width: '100%', height: '100%' }}>파도타기 🌊</button>
             </div>
         </ProfileBox>
     );
@@ -47,7 +47,7 @@ const ProfileBox = styled.div`
     border: 2px solid var(--dark-gray);
     box-shadow: inset 0 0 0 6px hsl(0, 0%, 90%);
 
-    padding: 25px 30px 25px 30px;
+    padding: 25px 30px;
 
     display: grid;
     grid-template-rows: 155px 50px 85px 65px 40px;

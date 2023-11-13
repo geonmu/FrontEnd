@@ -4,7 +4,6 @@ import Profile from '../components/minihompy/Profile';
 import Home from '../components/minihompy/Home';
 import Guestbook from '../components/minihompy/Guestbook';
 import Book from '../components/layout/Book'
-import BookPaper from '../components/layout/BookPaper';
 
 function MinihompyPage() {
     const [content, setContent] = useState("home");
@@ -23,16 +22,16 @@ function MinihompyPage() {
     <Background>
         <Book width='1000px' height='600px' margin='75px auto' display='grid' gridTemplateColumns='3fr 7fr'>
             {/* 프로필 영역 */}
-            <BookPaper>
+            <div className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>
                 <div className='fontText headText' style={{ justifyContent: 'center' }}>
                     TODAY&nbsp;<span style={{ color: 'var(--dark-red)' }}>12</span>&nbsp;| TOTAL 34
                 </div>
                 <Profile/>
-            </BookPaper>
+            </div>
             {/* 컨텐츠 영역 */}
-            <BookPaper backgroundColor='var(--light-gray)'>
+            <div className='bookPaper' style={{ backgroundColor: 'var(--light-gray)', display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>
                 <ContentsHead>
-                    <span className='fontText headText' style={{ color: 'var(--blue)', fontSize: 24, justifyContent: 'left' }}>광운월드</span>
+                    <span className='fontText headText' style={{ color: 'var(--dark-blue)', fontSize: 24, justifyContent: 'left' }}>광운월드</span>
                     <span className='fontText headText' style={{ justifyContent: 'right' }}>WELCOME TO KWWORLD!</span>
                 </ContentsHead>
                 <ContentsBox>
@@ -52,7 +51,7 @@ function MinihompyPage() {
                         </MenuButton>
                     </Menu>
                 </ContentsBox>
-            </BookPaper>
+            </div>
         </Book>
     </Background>
     );

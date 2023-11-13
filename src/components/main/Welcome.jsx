@@ -7,7 +7,7 @@ function Welcome() {
             <span className='fontText headText' style={{ fontSize: 24, justifyContent: 'center' }}>이건무님 반갑습니다!</span>
             <Grid>
                 <div style={{ textAlign: 'center', gridColumnStart: 1, gridColumnEnd: 2, gridRowStart: 1, gridRowEnd: 4 }} >
-                    <img className='profileImage' src={ProfileImage} style={{ width: '100%' }}/>
+                    <img className='profileImage' src={ProfileImage} alt='프로필사진' style={{ width: '100%' }}/>
                 </div>
                 <button>프로필 편집 ⚙️</button>
                 <button>도토리 충전 🌰</button>
