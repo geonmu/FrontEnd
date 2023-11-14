@@ -18,17 +18,17 @@ function Profile() {
                     <span className='fontText' style={{ color: 'var(--dark-blue)' }}>TODAY IS...</span>&nbsp;&nbsp;최대여섯글자
                 </TodayIs>
             </div>
-            <div className='bodyText'>
-                <span>인트로 최대 4줄ㅎㅇ<br/><br/>테스트g<br/>test</span>
+            <div className='bodyText' style={{ display: 'flex', alignItems: 'center' }}>
+                <span>안녕하세요<br/><br/>테스트g<br/><br/>test</span>
             </div>
             <div>
                 <History className='fontText'>
                     <span style={{ color: 'var(--dark-blue)' }}>▶</span>History
                 </History>
-                <div className='bodyText'>
+                <div className='bodyText' style={{ marginTop: '5px' }}>
                     <span>이건무</span>
                     <span style={{ color: 'var(--dark-gray)', fontSize: 14 }}> 2004.03.09</span><br/>
-                    <span style={{ color: 'var(--orange)' }}> 소프트웨어학부 23학번</span>
+                    <span style={{ color: 'var(--orange)' }}> 소프트웨어학부 23</span>
                 </div>
             </div>
             <div>
@@ -50,8 +50,8 @@ const ProfileBox = styled.div`
     padding: 25px 30px;
 
     display: grid;
-    grid-template-rows: 155px 50px 85px 65px 40px;
-    row-gap: 4px;
+    grid-template-rows: 155px 45px 95px 70px 40px;
+    row-gap: 2px;
 `;
 
 const TodayIs = styled.div`
@@ -59,9 +59,9 @@ const TodayIs = styled.div`
     justify-content: center;
     align-items: center;
 
-    margin: 8px 0px;
+    margin-top: 4px;
 
-    height: 65%;
+    height: 30px;
     font-size: 1rem;
     background-color: white;
     border-radius: 6px;
@@ -69,7 +69,8 @@ const TodayIs = styled.div`
 `;
 
 const History = styled.div`
-    height: 25%;
+    margin-top: 4px;
+    height: 15px;
     border-bottom: 2px dotted var(--dark-gray);
     font-size: 0.8rem;
     font-weight: 600;

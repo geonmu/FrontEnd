@@ -26,17 +26,17 @@ function MainPage() {
   }, []);
 
   return (
-    <>
+    <Container>
       <Background/>
       <MainBox>
-        <div className='headText' style={{ justifyContent: 'center' }}><img src={Logo} alt="logo"/></div>
+        <div className='headText'><img src={Logo} alt="logo"/></div>
         <Book display='grid'>
-          <div className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 6fr' }}>
-            <>{(true) ? <SignIn /> : <Welcome />}</> {/* 로그인 여부에 따른 컴포넌트 */}
+          <div className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 6fr'}}>
+            { (false) ? <Welcome /> : <SignIn /> } {/* 로그인 여부에 따른 컴포넌트 */}
           </div>
         </Book>
       </MainBox>
-    </>
+    </Container>
   );
 }
 
@@ -61,6 +61,18 @@ const animateBackground = keyframes`
   }
 `;
 
+const Container = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  display: flex;
+  justify-content: center;
+  align-content: center;
+`;
+
 /* 배경 */
 const Background = styled.div`
   position: fixed;
@@ -82,8 +94,8 @@ const MainBox = styled.div`
   border-radius: 20px;
 
   width: 550px;
-  height: 450px;
-  margin: 150px auto;
+  height: 500px;
+  margin: auto;
 
   padding: 40px 30px;
 

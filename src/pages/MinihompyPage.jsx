@@ -19,11 +19,12 @@ function MinihompyPage() {
     };
 
     return (
-    <Background>
-        <Book width='1000px' height='600px' margin='75px auto' display='grid' gridTemplateColumns='3fr 7fr'>
+    <Container>
+        <Background/>
+        <Book width='1000px' height='600px' margin='auto' display='grid' gridTemplateColumns='3fr 7fr'>
             {/* 프로필 영역 */}
             <div className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>
-                <div className='fontText headText' style={{ justifyContent: 'center' }}>
+                <div className='fontText headText'>
                     TODAY&nbsp;<span style={{ color: 'var(--dark-red)' }}>12</span>&nbsp;| TOTAL 34
                 </div>
                 <Profile/>
@@ -53,11 +54,23 @@ function MinihompyPage() {
                 </ContentsBox>
             </div>
         </Book>
-    </Background>
+    </Container>
     );
 }
 
 export default MinihompyPage;
+
+const Container = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  display: flex;
+  justify-content: center;
+  align-content: center;
+`;
 
 const Background = styled.div`
     background-size: 30px 30px;

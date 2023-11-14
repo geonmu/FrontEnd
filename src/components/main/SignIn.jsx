@@ -1,16 +1,49 @@
+import { useForm } from "react-hook-form";
 import styled from 'styled-components';
 
 function SignIn() {
+    const {
+        register,
+        handleSubmit,
+        trigger,
+        setValue,
+        getValues,
+        formState: { errors, isValid },
+    } = useForm({mode: 'onBlur'});
+
     return (
         <>
-            <span className='fontText headText' style={{ fontSize: 24, justifyContent: 'center' }}>로그인</span>
-            <Form method='post' action=''>
-                <input placeholder='이메일' required ></input>
-                <input placeholder='비밀번호' required ></input>
-                <button type='submit' style={{ color: 'white', borderColor: 'var(--dark-blue)', backgroundColor: 'var(--blue)' }}>로그인</button>
-                <button type='button' onClick={() => window.open('/signup', '_blank', 'toolbar=no resizable=no status=no menubar=no')}>회원가입</button>
+            <span className='fontText headText' style={{ fontSize: 24 }}>로그인</span>
+            <Form>
+                <Wrapper>
+                    <input
+                        placeholder='이메일'
+                        {...register('email', {
+                        required: '이메일을 입력해주세요.',
+                        })}
+                    />
+                </Wrapper>
+                    {errors.email && <span className='errorMessage'>{errors.email.message}</span>}
+                <Wrapper>
+                
+                    <input
+                        placeholder='비밀번호'
+                        type='password'
+                        {...register('password', {
+                        required: '비밀번호를 입력해주세요.',
+                        })}
+                    />
+                </Wrapper>
+                {errors.password && <span className='errorMessage'>{errors.password.message}</span>}
+
+                <Wrapper>
+                <button class='primaryButton' type='submit'>로그인</button>
+                </Wrapper>
+
+                <Wrapper>
+                    <button type='button' onClick={() => window.open('/signup', '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')}>회원가입</button>
+                </Wrapper>
             </Form>
-            
         </>
     );
 }
@@ -18,10 +51,14 @@ function SignIn() {
 export default SignIn;
 
 const Form = styled.form`
-    margin: 15px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0px 110px 20px;
+`;
+
+const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: 250px;
-    grid-template-rows: repeat(4, 40px);
-    column-gap: 15px;
-    row-gap: 10px
+    margin-top: 10px;
+    height: 40px;
 `;
