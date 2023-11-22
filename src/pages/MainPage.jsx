@@ -1,5 +1,7 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
+import { setCookie, decodeCookie, removeCookie } from '../shared/Cookies';
 import SignIn from '../components/main/SignIn'
 import Welcome from '../components/main/Welcome'
 import Book from '../components/layout/Book';
@@ -9,11 +11,36 @@ import Background2 from '../images/background/background2.png';
 import Background3 from '../images/background/background3.png';
 
 
+
+
+
 /* 배경 이미지 미리 불러오기 */
 let images = [];
 let backgroundImages = [Background1, Background2, Background3];
 
+
 function MainPage() {
+  const SERVER = process.env.REACT_APP_SERVER;
+
+  const [user, setUser] = useState();
+  const decode = decodeCookie("accessToken");
+  console.log(decode);
+
+  function userHome() {
+    if (Number(decode?.userId)) {
+      axios.get(`${SERVER}/users/myhome/${decode.userId}`).then((res) => {
+        console.log(res);
+        setUser(res.data.data);
+      });
+    }
+  }
+  
+  useEffect(() => {
+    userHome();
+  }, []);
+
+  
+
   const backgroundPreload = () => {
     for(let i  = 0; i < backgroundImages.length; i++) {
       images[i] = new Image();
@@ -35,9 +62,9 @@ function MainPage() {
         <Book display='grid'>
           <div className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 6fr'}}>
             { 
-              true ? 
+              Number(user?.userId) ? 
               <>
-              <span className='headText' style={{ fontSize: 24, fontWeight: 'bold' }}>이건무님 반갑습니다!</span>
+              <span className='headText' style={{ fontSize: 24, fontWeight: 'bold' }}>{user?.name}님 반갑습니다!</span>
               <Welcome />
               </>
               :

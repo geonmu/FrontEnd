@@ -52,8 +52,12 @@ function SignUp() {
                     })}
                 />
                 <button
-                
-                >중복 확인</button>
+                onClick={() => {
+                    alert('중복 체크');
+                    
+                }}>
+                중복 확인
+                </button>
             </Wrapper>
             {errors.email && <span className='errorMessage'>{errors.email.message}</span>}
 

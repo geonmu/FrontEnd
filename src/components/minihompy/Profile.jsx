@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ProfileImage from '../../images/profile_image.png'
 
-function surfingOnClick() {
+function ClickSurfing() {
     alert('pado');
 }
 
@@ -26,14 +26,14 @@ function Profile() {
                     <span style={{ color: 'var(--dark-blue)' }}>▶</span>History
                 </History>
                 <div className='bodyText' style={{ marginTop: '5px' }}>
-                    <span>WWWWWWWW</span>
+                    <span>이건무</span>
                     <span style={{ color: 'var(--dark-gray)', fontSize: 10 }}> 2004.03.09</span><br/>
-                    <span style={{ color: 'var(--orange)' }}> 미디어커뮤니케이션학부</span>
+                    <span style={{ color: 'var(--orange)' }}> 소프트웨어학부</span>
                     <span style={{ color: 'var(--light-orange)', fontSize: 10  }}> 23학번</span>
                 </div>
             </section>
             <section>
-                <button onClick={surfingOnClick}style={{ width: '100%', height: '100%' }}>파도타기 🌊</button>
+                <button onClick={ClickSurfing}style={{ width: '100%', height: '100%' }}>파도타기 🌊</button>
             </section>
         </ProfileBox>
     );

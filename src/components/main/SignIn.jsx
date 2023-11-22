@@ -1,19 +1,39 @@
-import { useForm } from "react-hook-form";
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { setCookie } from '../../shared/Cookies';
 
 function SignIn() {
+    const SERVER = process.env.REACT_APP_SERVER;
+
     const {
         register,
         handleSubmit,
-        formState: { errors, isValid },
+        formState: { errors },
     } = useForm({mode: 'onSubmit'});
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const ClickLogin = (data) => {
+        axios
+        .post(`${SERVER}/api/users/login`, data).then((res) => {
+            // const userId = res.data.userId;
+            const accessToken = res.data.accesstoken;
+            const refreshToken = res.data.refreshtoken;
+            setCookie("accessToken", accessToken);
+            setCookie("refreshToken", refreshToken);
+            if (res.statusText === "OK") {
+                window.location.reload();
+                // navigate(`/HomeP/${userId}`);
+            }
+        })
+        .catch((error) => {
+            if (error.code === "ERR_BAD_REQUEST") {
+                console.log('error');
+            }
+        });
     }
 
     return (
-        <SignInLayout onSubmit={handleSubmit(onSubmit)}>
+        <SignInLayout onSubmit={handleSubmit(ClickLogin)}>
             <Wrapper>
                 <input
                     placeholder='이메일'
