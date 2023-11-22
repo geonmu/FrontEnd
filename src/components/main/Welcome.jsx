@@ -3,9 +3,7 @@ import ProfileImage from '../../images/profile_image.png'
 
 function Welcome() {
     return (
-        <>
-            <span className='fontText headText' style={{ fontSize: 24 }}>이건무님 반갑습니다!</span>
-            <Grid>
+            <WelcomeLayout>
                 <div style={{ textAlign: 'center', gridRowStart: 1, gridRowEnd: 4 }} >
                     <img className='profileImage' src={ProfileImage} alt='프로필사진' style={{ width: '100%' }}/>
                 </div>
@@ -14,14 +12,13 @@ function Welcome() {
                 <button>파도타기 🌊</button>
                 <button className='primaryButton'>내 미니홈피 바로가기</button>
                 <button>로그아웃 🚪</button>
-            </Grid>
-        </>
+            </WelcomeLayout>
     );
 }
 
 export default Welcome;
 
-const Grid = styled.div`
+const WelcomeLayout = styled.div`
     margin: 30px auto;
     display: grid;
     grid-template-columns: 180px 135px;

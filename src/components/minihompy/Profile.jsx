@@ -9,31 +9,32 @@ function surfingOnClick() {
 function Profile() {
     return(
         <ProfileBox>
-            <div>
+            <section>
                 <img className='profileImage' src={ProfileImage} alt='프로필사진' style={{ width: '100%' }}/>
-            </div>
-            <div>
+            </section>
+            <section>
                 <DottedLine />
                 <TodayIs>
                     <span className='fontText' style={{ color: 'var(--dark-blue)' }}>TODAY IS...</span>&nbsp;&nbsp;최대여섯글자
                 </TodayIs>
-            </div>
-            <div className='bodyText' style={{ display: 'flex', alignItems: 'center' }}>
-                <span>안녕하세요<br/><br/>테스트g<br/><br/>test</span>
-            </div>
-            <div>
+            </section>
+            <section className='bodyText' style={{ display: 'flex', alignItems: 'center' }}>
+                <span>안녕하세요<br/><br/>최대다섯줄<br/><br/>test</span>
+            </section>
+            <section>
                 <History className='fontText'>
                     <span style={{ color: 'var(--dark-blue)' }}>▶</span>History
                 </History>
                 <div className='bodyText' style={{ marginTop: '5px' }}>
-                    <span>이건무</span>
-                    <span style={{ color: 'var(--dark-gray)', fontSize: 14 }}> 2004.03.09</span><br/>
-                    <span style={{ color: 'var(--orange)' }}> 소프트웨어학부 23</span>
+                    <span>WWWWWWWW</span>
+                    <span style={{ color: 'var(--dark-gray)', fontSize: 10 }}> 2004.03.09</span><br/>
+                    <span style={{ color: 'var(--orange)' }}> 미디어커뮤니케이션학부</span>
+                    <span style={{ color: 'var(--light-orange)', fontSize: 10  }}> 23학번</span>
                 </div>
-            </div>
-            <div>
+            </section>
+            <section>
                 <button onClick={surfingOnClick}style={{ width: '100%', height: '100%' }}>파도타기 🌊</button>
-            </div>
+            </section>
         </ProfileBox>
     );
 }
@@ -59,7 +60,7 @@ const TodayIs = styled.div`
     justify-content: center;
     align-items: center;
 
-    margin-top: 4px;
+    margin-top: 5px;
 
     height: 30px;
     font-size: 1rem;

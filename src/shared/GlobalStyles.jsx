@@ -13,8 +13,9 @@ const GlobalStyles = createGlobalStyle`
         --gray: #cecece;
         --light-gray: #eaeaea;
 
-        --dark-red: #9e1616;
-        --orange: #ee8f4f;
+        --dark-red: #b51919;
+        --orange: #ff9c55;
+        --light-orange: #ffbc90;
 
         --dark-sky-blue: #77aacc;
         --sky-blue: #6fafd4;
@@ -50,7 +51,7 @@ const GlobalStyles = createGlobalStyle`
 
         &:disabled {
             pointer-events: none;
-            filter: brightness(0.85);
+            filter: brightness(0.9);
             cursor: default;
         }
     }
@@ -95,6 +96,7 @@ const GlobalStyles = createGlobalStyle`
     /* 두 줄 이상의 글 */
     .bodyText {
         word-break: break-all;
+        overflow: hidden;
         line-height: 1.15;
     }
 
@@ -105,18 +107,17 @@ const GlobalStyles = createGlobalStyle`
     }
 
     .errorMessage {
-        color: red;
+        color: var(--dark-red);
         font-size: 0.8rem;
         margin: 3px;
     }
 
     /* 프로필 이미지 */
     .profileImage {
+        aspect-ratio: 4 / 3;
         background-position: center center;
         object-fit: cover;
-        aspect-ratio: 4 / 3;
         border-radius: 12px;
-        border: 1px solid var(--light-gray);
     }
 `;
 

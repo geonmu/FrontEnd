@@ -20,6 +20,8 @@ const BookCover = styled.div`
     box-shadow: 5px 5px 5px rgb(0, 0, 0, 0.3);
 
     position: relative;
+
+    flex: none;
 `;
 
 const BookDot = styled.div`

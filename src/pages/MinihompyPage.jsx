@@ -19,18 +19,18 @@ function MinihompyPage() {
     };
 
     return (
-    <Container>
+    <MinihompyPageLayout>
         <Background/>
         <Book width='1000px' height='600px' margin='auto' display='grid' gridTemplateColumns='3fr 7fr'>
             {/* 프로필 영역 */}
-            <div className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>
+            <section className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>
                 <div className='fontText headText'>
                     TODAY&nbsp;<span style={{ color: 'var(--dark-red)' }}>12</span>&nbsp;| TOTAL 34
                 </div>
                 <Profile/>
-            </div>
+            </section>
             {/* 컨텐츠 영역 */}
-            <div className='bookPaper' style={{ backgroundColor: 'var(--light-gray)', display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>
+            <section className='bookPaper' style={{ backgroundColor: 'var(--light-gray)', display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>
                 <ContentsHead>
                     <span className='fontText headText' style={{ color: 'var(--dark-blue)', fontSize: 24, justifyContent: 'left' }}>광운월드</span>
                     <span className='fontText headText' style={{ justifyContent: 'right' }}>WELCOME TO KWWORLD!</span>
@@ -52,15 +52,15 @@ function MinihompyPage() {
                         </MenuButton>
                     </Menu>
                 </ContentsBox>
-            </div>
+            </section>
         </Book>
-    </Container>
+    </MinihompyPageLayout>
     );
 }
 
 export default MinihompyPage;
 
-const Container = styled.div`
+const MinihompyPageLayout = styled.div`
   position: fixed;
   top: 0;
   bottom: 0;
@@ -73,17 +73,18 @@ const Container = styled.div`
 `;
 
 const Background = styled.div`
-    background-size: 30px 30px;
-    background-image:
-      linear-gradient(to right, var(--light-gray) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--light-gray) 1px, transparent 1px);
-    background-color: var(--gray);
-
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+
+    background-size: 30px 30px;
+    background-image:
+      linear-gradient(to right, var(--gray) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--gray) 1px, transparent 1px);
+    background-color: var(--dark-gray);
+
 `;
 
 const ContentsHead = styled.div`
