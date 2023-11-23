@@ -1,9 +1,13 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { setCookie } from '../../shared/Cookies';
+import { setCookie, decodeCookie } from '../../shared/Cookies';
 
 function SignIn() {
+    const [user, setUser] = useState();
+    const decode = decodeCookie("accessToken");
+
     const {
         register,
         handleSubmit,
