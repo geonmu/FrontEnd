@@ -1,13 +1,17 @@
-import React, { useEffect, userState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useForm } from "react-hook-form";
 import styled from 'styled-components';
 
 function SignUp() {
+    //아이디 중복 체크여부
+    const [check, setCheck] = useState(false);
+
     const {
         register,
         handleSubmit,
         getValues,
+        watch,
         formState: { errors },
     } = useForm({mode: 'onBlur'});
 
@@ -32,17 +36,48 @@ function SignUp() {
         return true;
     };
 
-                        {/*
-                    pattern: {
-                        value: /^[a-z0-9_.]+@kw+\.ac+\.kr/,
-                        message: 'kw.ac.kr 도메인의 이메일만 가입 가능합니다.',
-                    },
-                    */}
+    {/*
+    pattern: {
+    value: /^[a-z0-9_.]+@kw+\.ac+\.kr/,
+    message: 'kw.ac.kr 도메인의 이메일만 가입 가능합니다.',
+    },
+    */}
+
+    //이메일 중복검사
+    const ClickCheckDup = () => {
+        const SERVER = process.env.REACT_APP_SERVER;
+
+        const email = watch('email');
+        if (email === '') {
+            alert('이메일을 먼저 입력해주세요.');
+        }
+        else {
+          axios
+            .post(`${SERVER}/api/users/emailcheck`, { email: email })
+            .then((res) => {
+              if (res.status === 200) {
+                alert('사용 가능한 이메일입니다.');
+                setCheck(true);
+              }
+            })
+            .catch((error) => {
+              if (error.code === "ERR_BAD_REQUEST") {
+                alert('사용 불가능한 이메일입니다.');
+                setCheck(false);
+              }
+            });
+        }
+      };
 
     //회원가입 데이터 전송
     const ClickSignUp = (data) => {
         const SERVER = process.env.REACT_APP_SERVER;
 
+        if (check === false) {
+            alert('이메일 중복검사를 해주세요.');
+        }
+        
+        else {
         axios
         .post(`${SERVER}/api/users/signup`, data).then((res) => {
             if (res.status === 201) {
@@ -58,6 +93,7 @@ function SignUp() {
                 alert('오류가 발생했습니다.');
             }
         });
+    }
     };
 
     return (
@@ -67,11 +103,11 @@ function SignUp() {
                 <input
                     placeholder='이메일 (@kw.ac.kr)'
                     {...register('email', {
-                    required: '이메일을 입력해주세요.'
-
+                    required: '이메일을 입력해주세요.',
+                    onChange: () => {setCheck(false)},
                     })}
                 />
-                <button  type='button'>중복 확인</button>
+                <button type='button' onClick={ClickCheckDup}>중복 확인</button>
             </Wrapper>
             {errors.email && <span className='errorMessage'>{errors.email.message}</span>}
 {/* 
