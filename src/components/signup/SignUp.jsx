@@ -32,6 +32,12 @@ function SignUp() {
         return true;
     };
 
+                        {/*
+                    pattern: {
+                        value: /^[a-z0-9_.]+@kw+\.ac+\.kr/,
+                        message: 'kw.ac.kr 도메인의 이메일만 가입 가능합니다.',
+                    },
+                    */}
 
     //회원가입 데이터 전송
     const ClickSignUp = (data) => {
@@ -61,12 +67,8 @@ function SignUp() {
                 <input
                     placeholder='이메일 (@kw.ac.kr)'
                     {...register('email', {
-                    required: '이메일을 입력해주세요.',
-                    pattern: {
-                        value: /^[a-z0-9_.]+@kw+\.ac+\.kr/,
-                        message: 'kw.ac.kr 도메인의 이메일만 가입 가능합니다.',
-                    },
-                    
+                    required: '이메일을 입력해주세요.'
+
                     })}
                 />
                 <button  type='button'>중복 확인</button>
