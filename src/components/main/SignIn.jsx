@@ -4,15 +4,15 @@ import styled from 'styled-components';
 import { setCookie } from '../../shared/Cookies';
 
 function SignIn() {
-    const SERVER = process.env.REACT_APP_SERVER;
-
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({mode: 'onSubmit'});
 
-    const ClickLogin = (data) => {
+    const ClickSignIn = (data) => {
+        const SERVER = process.env.REACT_APP_SERVER;
+
         axios
         .post(`${SERVER}/api/users/login`, data).then((res) => {
             // const userId = res.data.userId;
@@ -33,7 +33,7 @@ function SignIn() {
     }
 
     return (
-        <SignInLayout onSubmit={handleSubmit(ClickLogin)}>
+        <SignInLayout onSubmit={handleSubmit(ClickSignIn)}>
             <Wrapper>
                 <input
                     placeholder='이메일'

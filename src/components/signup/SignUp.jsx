@@ -1,5 +1,6 @@
 import React, { useEffect, userState } from 'react';
-import { set, useForm } from "react-hook-form";
+import axios from 'axios';
+import { useForm } from "react-hook-form";
 import styled from 'styled-components';
 
 function SignUp() {
@@ -32,12 +33,29 @@ function SignUp() {
     };
 
 
-    const onSubmit = (data) => {
-        console.log(data);
-    }
+    //회원가입 데이터 전송
+    const ClickSignUp = (data) => {
+        const SERVER = process.env.REACT_APP_SERVER;
+
+        axios
+        .post(`${SERVER}/api/users/signup`, data).then((res) => {
+            if (res.status === 201) {
+                alert('회원가입 완료!');
+                window.close();
+            }
+        })
+        .catch((error) => {
+            if (error.code === "ERR_BAD_REQUEST") {
+            console.log('bad request');
+            }
+            else {
+                alert('오류가 발생했습니다.');
+            }
+        });
+    };
 
     return (
-        <SignUpLayout className='bookPaper' onSubmit={handleSubmit(onSubmit)}>
+        <SignUpLayout className='bookPaper' onSubmit={handleSubmit(ClickSignUp)}>
             <span className='headText' style={{ fontSize: 24, fontWeight: 'bold', alignItems: 'center', marginBottom: '30px' }}>회원가입</span>
             <Wrapper style={{ display: 'grid', gridTemplateColumns: '7fr 3fr', columnGap: '5px' }}>
                 <input
@@ -51,16 +69,10 @@ function SignUp() {
                     
                     })}
                 />
-                <button
-                onClick={() => {
-                    alert('중복 체크');
-                    
-                }}>
-                중복 확인
-                </button>
+                <button  type='button'>중복 확인</button>
             </Wrapper>
             {errors.email && <span className='errorMessage'>{errors.email.message}</span>}
-
+{/* 
             <Wrapper style={{ display: 'grid', gridTemplateColumns: '4fr 1fr', columnGap: '5px' }}>
                 <input
                     disabled
@@ -69,9 +81,9 @@ function SignUp() {
                     required: '인증번호를 입력해주세요.',
                     })}
                 />
-                <button disabled>인증</button>
+                <button type='button' disabled>인증</button>
             </Wrapper>
-
+*/}
             <Wrapper>
                 <input
                     placeholder='비밀번호'
@@ -90,19 +102,19 @@ function SignUp() {
                 />
             </Wrapper>
             {errors.password && <span className='errorMessage'>{errors.password.message}</span>}
-
+            
             <Wrapper>
                 <input
                     placeholder="비밀번호 확인"
                     type="password"
-                    {...register('confirmPassword', {
+                    {...register('confirm', {
                         required: '비밀번호를 다시 입력해주세요.',
                         validate: (value) =>
                             value === getValues('password') || '비밀번호가 일치하지 않습니다.',
                     })}
                 />
             </Wrapper>
-            {errors.confirmPassword && <span className='errorMessage'>{errors.confirmPassword.message}</span>}
+            {errors.confirm && <span className='errorMessage'>{errors.confirm.message}</span>}
 
             <Wrapper>
                 <div style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', columnGap: '5px' }}>
@@ -136,14 +148,14 @@ function SignUp() {
             <Wrapper>
                 <input
                     placeholder='생년월일 8자리'
-                    {...register('birthday', {
+                    {...register('birth', {
                         required: '생년월일을 입력해주세요.',
                         validate: validateBirthday,
                     })}
                 />
             </Wrapper>
-            {errors.birthday && <span className='errorMessage'>{errors.birthday.message}</span>}
-
+            {errors.birth && <span className='errorMessage'>{errors.birth.message}</span>}
+        {/*
             <Wrapper style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', columnGap: '5px' }}>
             <select
                 defaultValue='소프트웨어학부'
@@ -223,7 +235,7 @@ function SignUp() {
             </Wrapper>
             {errors.major && <span className='errorMessage'>{errors.major.message}</span>}
             {errors.admissionYear && <span className='errorMessage'>{errors.admissionYear.message}</span>}
-
+            */}
             <Wrapper style={{ marginTop: '25px' }}>
                 <button className='primaryButton' type='submit'>회원가입</button>
             </Wrapper>
