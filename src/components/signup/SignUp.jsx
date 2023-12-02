@@ -300,7 +300,7 @@ function SignUp() {
             <Wrapper style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', columnGap: '5px' }}>
                 <select
                     defaultValue='소프트웨어학부'
-                    {...register('major', {
+                    {...register('department', {
                         required: '학과를 선택해주세요.'
                     })}
                 >
@@ -356,7 +356,7 @@ function SignUp() {
 
                 <select
                     defaultValue='23'
-                    {...register('admissionYear', {
+                    {...register('classof', {
                         required: '학번을 선택해주세요.'
                     })}
                 >
@@ -373,8 +373,8 @@ function SignUp() {
                     </optgroup>
                 </select>
             </Wrapper>
-            {errors.major && <span className='errorMessage'>{errors.major.message}</span>}
-            {errors.admissionYear && <span className='errorMessage'>{errors.admissionYear.message}</span>}
+            {errors.department && <span className='errorMessage'>{errors.department.message}</span>}
+            {errors.classof && <span className='errorMessage'>{errors.classof.message}</span>}
 
             <Wrapper style={{ marginTop: '25px' }}>
                 <button className='primaryButton' type='submit'>회원가입</button>
