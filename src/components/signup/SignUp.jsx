@@ -208,12 +208,12 @@ function SignUp() {
                     onChange: () => {setIsCheck(false); setIsAuth(false);},
                     })}
                 />
-                <span style={{margin: '12px 3px 0px'}}>@kw.ac.kr</span>
+                <span style={{margin: '12px 2px 0px'}}>@kw.ac.kr</span>
                 <button type='button' onClick={ClickCheck}>중복 확인</button>
             </Wrapper>
             {errors.email && <span className='errorMessage'>{errors.email.message}</span>}
 
-            <Wrapper style={{ display: 'grid', gridTemplateColumns: '4fr 1fr', columnGap: '5px' }}>
+            <Wrapper style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', columnGap: '5px' }}>
                 <input
                     placeholder='인증번호'
                     {...register('certificationNum', {
