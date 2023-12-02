@@ -306,6 +306,7 @@ function SignUp() {
       {errors.password && (
         <span className="errorMessage">{errors.password.message}</span>
       )}
+      
 
       <Wrapper>
         <input
