@@ -104,7 +104,7 @@ function SignUp() {
         }
     };
 
-    
+
     const ClickAuth = () => {
         const email = watch('email');
         const certificationNum = watch('certificationNum');
@@ -220,6 +220,18 @@ function SignUp() {
                     placeholder='이메일'
                     {...register('email', {
                     required: '이메일을 입력해주세요.',
+                    maxLength: {
+                        value: 10,
+                        message: "10글자 이하로 작성해주세요",
+                      },
+                      minLength: {
+                        value: 4,
+                        message: "4글자 이상으로 작성해주세요",
+                      },
+                      pattern: {
+                        value: /^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,10}$/,
+                        message: "형식에 맞지 않는 이메일 입니다.",
+                    },
                     onChange: () => {setIsCheck(false); setIsAuth(false);},
                     })}
                 />
