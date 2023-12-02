@@ -229,8 +229,8 @@ function SignUp() {
                         message: "4글자 이상으로 작성해주세요",
                       },
                       pattern: {
-                        value: /^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,10}$/,
-                        message: "형식에 맞지 않는 이메일 입니다.",
+                        value: /^(?=.*[a-zA-Z])[a-zA-Z0-9]/,
+                        message: '이메일 형식이 맞지 않습니다.',
                     },
                     onChange: () => {setIsCheck(false); setIsAuth(false);},
                     })}
