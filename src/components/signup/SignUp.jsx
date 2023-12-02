@@ -294,6 +294,7 @@ function SignUp() {
             </Wrapper>
             {errors.birth && <span className='errorMessage'>{errors.birth.message}</span>}
 
+            {/*
             <Wrapper style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', columnGap: '5px' }}>
                 <select
                     defaultValue='소프트웨어학부'
@@ -373,6 +374,7 @@ function SignUp() {
             {errors.department && <span className='errorMessage'>{errors.department.message}</span>}
             {errors.classof && <span className='errorMessage'>{errors.classof.message}</span>}
 
+            */}
             <Wrapper style={{ marginTop: '25px' }}>
                 <button className='primaryButton' type='submit'>회원가입</button>
             </Wrapper>
