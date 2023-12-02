@@ -107,7 +107,7 @@ function SignUp() {
     const ClickAuth = () => {
         const email = watch('email');
         const certificationNum = watch('certificationNum');
-        console.log(certificationNum)
+        console.log(email, certificationNum)
 
         if (isCheck === false) {
             Swal.fire({
