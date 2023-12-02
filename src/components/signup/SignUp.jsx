@@ -29,7 +29,7 @@ function SignUp({ setBtn }) {
       Swal.fire("중복검사를 진행해주세요!");
     } else {
       axios
-        .post(`${SERVER}/users/signup`, data)
+        .post(`${SERVER}/api/users/signup`, data)
         .then((res) => {
           if (res.status === 201) {
             Swal.fire("회원가입에 성공했습니다.");
@@ -56,7 +56,7 @@ function SignUp({ setBtn }) {
       Swal.fire("값을 먼저 입력해주세요.");
     } else {
       axios
-        .post(`${SERVER}/users/emailcheck`, { email: email })
+        .post(`${SERVER}/api/users/emailcheck`, { email: email })
         .then((res) => {
           if (res.status === 200) {
             Swal.fire("사용가능한 이메일 아이디 입니다.");
