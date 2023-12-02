@@ -9,13 +9,13 @@ function Welcome() {
     const decode = decodeCookie("accessToken");
 
     function ClickMyMinihompy() {
-        window.open('/minihompy/${decode.userId}', '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
+        window.open(`/minihompy/${decode.userId}`, '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
     }
 
     function ClickSurfing() {
         axios.get(`${SERVER}/api/users/surfing`).then((res) => {
             const random = res.data.data;
-            window.open('/minihompy/${random}', '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
+            window.open(`/minihompy/${random}`, '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
         });
     }
 
