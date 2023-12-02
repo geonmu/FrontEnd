@@ -28,7 +28,7 @@ function MainPage() {
 
   function userHome() {
     if (Number(decode?.userId)) {
-      axios.get(`${SERVER}/users/myhome/${decode.userId}`).then((res) => {
+      axios.get(`${SERVER}/api/users/myhome/${decode.userId}`).then((res) => {
         console.log(res);
         setUser(res.data.data);
       });

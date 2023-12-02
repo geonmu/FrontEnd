@@ -376,21 +376,6 @@ function SignUp() {
             {errors.major && <span className='errorMessage'>{errors.major.message}</span>}
             {errors.admissionYear && <span className='errorMessage'>{errors.admissionYear.message}</span>}
 
-            <Wrapper> 
-                <select
-                    defaultValue='공개'
-                    {...register('publicProfile', {
-                        required: '프로필 공개 여부를 선택해주세요.'
-                    })}
-                >
-                    <optgroup label='프로필 공개 여부'>
-                        <option value='공개'>공개</option>
-                        <option value='비공개'>비공개</option>
-                    </optgroup>
-                </select>
-            </Wrapper>
-            {errors.publicProfile && <span className='errorMessage'>{errors.publicProfile.message}</span>}
-
             <Wrapper style={{ marginTop: '25px' }}>
                 <button className='primaryButton' type='submit'>회원가입</button>
             </Wrapper>
