@@ -55,7 +55,7 @@ function SignUp() {
 
     //이메일 중복검사
     const ClickCheck = () => {
-        const email = watch('email');
+        const email = watch('email') + '@kw.ac.kr';
         if (email === '') {
             Swal.fire({
                 html: '이메일을 입력해주세요.',
@@ -67,7 +67,7 @@ function SignUp() {
         }
         else {
             axios
-            .post(`${SERVER}/api/users/emailcheck`, { email: email + '@kw.ac.kr' })
+            .post(`${SERVER}/api/users/emailcheck`, { email: email })
             .then((res) => {
                 if (res.status === 200) {
                     Swal.fire({
@@ -220,10 +220,6 @@ function SignUp() {
                     placeholder='이메일'
                     {...register('email', {
                     required: '이메일을 입력해주세요.',
-                    pattern: {
-                        value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                        message: '이메일 형식이 올바르지 않습니다.',
-                    },
                     onChange: () => {setIsCheck(false); setIsAuth(false);},
                     })}
                 />
