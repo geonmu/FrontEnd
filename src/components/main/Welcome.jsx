@@ -40,10 +40,10 @@ function Welcome() {
 export default Welcome;
 
 const WelcomeLayout = styled.div`
-    margin: 30px auto;
+    margin: 25px auto;
     display: grid;
-    grid-template-columns: 180px 135px;
+    grid-template-columns: 200px 135px;
     grid-template-rows: repeat(4, 40px);
-    column-gap: 40px;
-    row-gap: 10px
+    column-gap: 30px;
+    row-gap: 15px
 `;

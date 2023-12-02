@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-import Auth from '../components/signup/Auth';
+import Edit from '../components/edit/edit'
 
-function AuthPage() {
+function ProfilePage() {
     return (
-        <AuthPageLayout>
-            <Auth />
-        </AuthPageLayout>
+        <EditPageLayout>
+          <Edit/>
+        </EditPageLayout>
     );
 }
 
-export default AuthPage;
+export default ProfilePage;
 
-const AuthPageLayout = styled.div`
+const EditPageLayout = styled.div`
   position: fixed;
   top: 0;
   bottom: 0;

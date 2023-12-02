@@ -128,7 +128,6 @@ const Background = styled.div`
   transform: scale(1.1);
 `;
 
-/* 구역 정의 */
 const MainBox = styled.div`
   background-color: white;
   border-radius: 20px;

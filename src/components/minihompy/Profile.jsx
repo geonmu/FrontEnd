@@ -48,7 +48,7 @@ const ProfileBox = styled.div`
     border: 2px solid var(--dark-gray);
     box-shadow: inset 0 0 0 6px hsl(0, 0%, 90%);
 
-    padding: 25px 30px;
+    padding: 25px 29px;
 
     display: grid;
     grid-template-rows: 155px 45px 95px 70px 40px;

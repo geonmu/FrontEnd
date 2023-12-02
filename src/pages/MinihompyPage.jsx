@@ -36,7 +36,7 @@ function MinihompyPage() {
                     <span className='fontText headText' style={{ justifyContent: 'right' }}>WELCOME TO KWWORLD!</span>
                 </ContentsHead>
                 <ContentsBox>
-                    <div style={{ padding: '12px 72px' }}>
+                    <div style={{ padding: '24px 67px' }}>
                         {content && <div>{selectComponent[content]}</div>}
                     </div>
                     <Menu className='fontText'>
