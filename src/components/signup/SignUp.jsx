@@ -181,9 +181,9 @@ function SignUp() {
             });
         }
         else {
-        const { certificationNum, ...submitData } = data;
+        const { email, certificationNum, ...submitData } = data;
         axios
-        .post(`${SERVER}/api/users/signup`, submitData)
+        .post(`${SERVER}/api/users/signup`, { ...submitData, email: email + '@kw.ac.kr' })
         .then((res) => {
             if (res.status === 201) {
                 Swal.fire({
