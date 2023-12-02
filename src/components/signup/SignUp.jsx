@@ -1,327 +1,379 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import styled from 'styled-components';
+import axios from "axios";
+import Swal from "sweetalert2";
+import styled from "styled-components";
 
 function SignUp() {
-    useEffect(() => {
-        const handleKeyPress = (event) => {
-            if (event.key === 'Enter') {
-            event.preventDefault();
-            }
-        };
-    
-        document.addEventListener('keydown', handleKeyPress);
-    
-        return () => {
-            document.removeEventListener('keydown', handleKeyPress);
-        };
-    }, []);
-
-    //아이디 중복 체크여부
-    const [isCheck, setIsCheck] = useState(false);
-    const [isAuth, setIsAuth] = useState(false);
-
-    const SERVER = process.env.REACT_APP_SERVER;
-
-    const {
-        register,
-        handleSubmit,
-        getValues,
-        watch,
-        formState: { errors },
-    } = useForm({mode: 'onBlur'});
-
-    const validateBirthday = (value) => {
-        const validDate = /^\d{8}$/;
-        if (!validDate.test(value)) {
-          return '생년월일은 8자리 숫자 형식으로 입력해주세요.';
-        }
-    
-        const year = parseInt(value.substring(0, 4));
-        const month = parseInt(value.substring(4, 6));
-        const day = parseInt(value.substring(6, 8));
-    
-        const date = new Date(year, month - 1, day);
-        const valid = date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
-    
-        if (!valid) {
-          return '생년월일 형식이 올바르지 않습니다.';
-        }
-    
-        return true;
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+      }
     };
 
-    //이메일 중복검사
-    const ClickCheck = () => {
-        const email = watch('email');
-        if (email === '') {
-            Swal.fire({
-                html: '이메일을 입력해주세요.',
-                timer: 2000,
-                showConfirmButton: false,
-                timerProgressBar: true,
-                width: 350
-            });
-        }
-        else {
-            axios
-            .post(`${SERVER}/api/users/emailcheck`, { email: email + '@kw.ac.kr' })
-            .then((res) => {
-                if (res.status === 200) {
-                    Swal.fire({
-                        html: '사용 가능한 이메일입니다.<br>인증번호를 전송합니다.',
-                        timer: 3000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        width: 350
-                    });
-                    setIsCheck(true);
-                }
-            })
-            .catch((error) => {
-                if (error.code === "ERR_BAD_REQUEST") {
-                    Swal.fire({
-                        html: '이미 사용 중인 이메일입니다.<br>다른 이메일로 시도해주세요.',
-                        timer: 2000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        width: 350
-                    });
-                }
-                else {
-                    Swal.fire({
-                        html: '오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.',
-                        timer: 2000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        width: 350
-                    });
-                }
-                setIsCheck(false);
-            });
-        }
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
     };
+  }, []);
 
+  //아이디 중복 체크여부
+  const [isCheck, setIsCheck] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
 
-    const ClickAuth = () => {
-        const email = watch('email');
-        const certificationNum = watch('certificationNum');
-        console.log(email, certificationNum)
+  const SERVER = process.env.REACT_APP_SERVER;
 
-        if (isCheck === false) {
-            Swal.fire({
-                html: '이메일 중복 확인을 해주세요.',
-                timer: 2000,
-                showConfirmButton: false,
-                timerProgressBar: true,
-                width: 350
-            });
-        }
-        else {
-            if (certificationNum === '') {
-                Swal.fire({
-                    html: '인증번호를 입력해주세요.',
-                    timer: 2000,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    width: 350
-                });
-            }
-            else {
-                axios
-                .post(`${SERVER}/api/users/emailcheck/auth`, { email: email + '@kw.ac.kr', certificationNum: Number(certificationNum) })
-                .then((res) => {
-                    if (res.status === 200) {
-                        Swal.fire({
-                            html: '인증 되었습니다.',
-                            timer: 3000,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                            width: 350
-                        });
-                        setIsAuth(true);
-                    }
-                })
-                .catch((error) => {
-                    if (error.code === "ERR_BAD_REQUEST") {
-                        Swal.fire({
-                            html: '인증번호가 올바르지 않습니다.',
-                            timer: 2000,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                            width: 350
-                        });
-                    }
-                    else {
-                        Swal.fire({
-                            html: '오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.',
-                            timer: 2000,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                            width: 350
-                        });
-                    }
-                    setIsAuth(false);
-                });
-            }
-        }
-    };
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    watch,
+    formState: { errors },
+  } = useForm({ mode: "onBlur" });
 
+  const validateBirthday = (value) => {
+    const validDate = /^\d{8}$/;
+    if (!validDate.test(value)) {
+      return "생년월일은 8자리 숫자 형식으로 입력해주세요.";
+    }
 
-    //회원가입 데이터 전송
-    const ClickSignUp = (data) => {
-        if (isCheck === false || isAuth === false) {
-            Swal.fire({
-                html: '이메일 인증을 해주세요.',
-                timer: 2000,
-                showConfirmButton: false,
-                timerProgressBar: true,
-                width: 350
-            });
-        }
-        else {
-        const { certificationNum, ...submitData } = data;
-        axios
-        .post(`${SERVER}/api/users/signup`, { ...submitData })
+    const year = parseInt(value.substring(0, 4));
+    const month = parseInt(value.substring(4, 6));
+    const day = parseInt(value.substring(6, 8));
+
+    const date = new Date(year, month - 1, day);
+    const valid =
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day;
+
+    if (!valid) {
+      return "생년월일 형식이 올바르지 않습니다.";
+    }
+
+    return true;
+  };
+
+  //이메일 중복검사
+  const ClickCheck = () => {
+    const email = watch("email");
+    if (email === "") {
+      Swal.fire({
+        html: "이메일을 입력해주세요.",
+        timer: 2000,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        width: 350,
+      });
+    } else {
+      axios
+        .post(`${SERVER}/api/users/emailcheck`, { email: email + "@kw.ac.kr" })
         .then((res) => {
-            if (res.status === 201) {
-                Swal.fire({
-                    html: '회원가입 완료!<br>잠시 후 창이 자동으로 닫힙니다.',
-                    timer: 3000,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    width: 350
-                }).then(() => {
-                    window.close();
-                });
-            }
+          if (res.status === 200) {
+            Swal.fire({
+              html: "사용 가능한 이메일입니다.<br>인증번호를 전송합니다.",
+              timer: 3000,
+              showConfirmButton: false,
+              timerProgressBar: true,
+              width: 350,
+            });
+            setIsCheck(true);
+          }
         })
         .catch((error) => {
-            if (error.code === "ERR_BAD_REQUEST") {
-                Swal.fire({
-                    html: '오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.',
-                    timer: 2000,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    width: 350
-                });
-            }
+          if (error.code === "ERR_BAD_REQUEST") {
+            Swal.fire({
+              html: "이미 사용 중인 이메일입니다.<br>다른 이메일로 시도해주세요.",
+              timer: 2000,
+              showConfirmButton: false,
+              timerProgressBar: true,
+              width: 350,
+            });
+          } else {
+            Swal.fire({
+              html: "오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.",
+              timer: 2000,
+              showConfirmButton: false,
+              timerProgressBar: true,
+              width: 350,
+            });
+          }
+          setIsCheck(false);
         });
     }
-    };
+  };
 
-    return (
-        <SignUpLayout className='bookPaper' onSubmit={handleSubmit(ClickSignUp)}>
-            <span className='headText' style={{ fontSize: 24, fontWeight: 'bold', alignItems: 'center', marginBottom: '30px' }}>회원가입</span>
-            <Wrapper style={{ display: 'grid', gridTemplateColumns: '4fr 3fr 3fr', columnGap: '5px' }}>
-                <input
-                    placeholder='이메일'
-                    {...register('email', {
-                    required: '이메일을 입력해주세요.',
-                    maxLength: {
-                        value: 10,
-                        message: "10글자 이하로 작성해주세요",
-                      },
-                      minLength: {
-                        value: 4,
-                        message: "4글자 이상으로 작성해주세요",
-                      },
-                      pattern: {
-                        value: /^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,10}$/,
-                        message: "형식에 맞지 않는 이메일 입니다.",
-                      },
-                    onChange: () => {setIsCheck(false); setIsAuth(false);},
-                    })}
-                />
-                <span style={{margin: '12px 2px 0px'}}>@kw.ac.kr</span>
-                <button type='button' onClick={ClickCheck}>중복 확인</button>
-            </Wrapper>
-            {errors.email && <span className='errorMessage'>{errors.email.message}</span>}
+  const ClickAuth = () => {
+    const email = watch("email");
+    const certificationNum = watch("certificationNum");
+    console.log(email, certificationNum);
 
-            <Wrapper style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', columnGap: '5px' }}>
-                <input
-                    placeholder='인증번호'
-                    {...register('certificationNum', {
-                    required: '인증번호를 입력해주세요.',
-                    })}
-                />
-                <button type='button' onClick={ClickAuth}>인증</button>
-            </Wrapper>
-            {errors.certificationNum && <span className='errorMessage'>{errors.certificationNum.message}</span>}
+    if (isCheck === false) {
+      Swal.fire({
+        html: "이메일 중복 확인을 해주세요.",
+        timer: 2000,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        width: 350,
+      });
+    } else {
+      if (certificationNum === "") {
+        Swal.fire({
+          html: "인증번호를 입력해주세요.",
+          timer: 2000,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          width: 350,
+        });
+      } else {
+        axios
+          .post(`${SERVER}/api/users/emailcheck/auth`, {
+            email: email + "@kw.ac.kr",
+            certificationNum: Number(certificationNum),
+          })
+          .then((res) => {
+            if (res.status === 200) {
+              Swal.fire({
+                html: "인증 되었습니다.",
+                timer: 3000,
+                showConfirmButton: false,
+                timerProgressBar: true,
+                width: 350,
+              });
+              setIsAuth(true);
+            }
+          })
+          .catch((error) => {
+            if (error.code === "ERR_BAD_REQUEST") {
+              Swal.fire({
+                html: "인증번호가 올바르지 않습니다.",
+                timer: 2000,
+                showConfirmButton: false,
+                timerProgressBar: true,
+                width: 350,
+              });
+            } else {
+              Swal.fire({
+                html: "오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.",
+                timer: 2000,
+                showConfirmButton: false,
+                timerProgressBar: true,
+                width: 350,
+              });
+            }
+            setIsAuth(false);
+          });
+      }
+    }
+  };
 
-            <Wrapper>
-                <input
-                    placeholder='비밀번호'
-                    type="password"
-                    {...register('password', {
-                    required: '비밀번호를 입력해주세요.',
-                    minLength: {
-                        value: 8,
-                        message: '비밀번호는 최소 8글자 이상 입력해주세요.',
-                    },
-                    maxLength: {
-                        value: 20,
-                        message: '비밀번호는 최대 20글자까지 입력 가능합니다.',
-                    },
-                    })}
-                />
-            </Wrapper>
-            {errors.password && <span className='errorMessage'>{errors.password.message}</span>}
-            
-            <Wrapper>
-                <input
-                    placeholder="비밀번호 확인"
-                    type="password"
-                    {...register('confirm', {
-                        required: '비밀번호를 다시 입력해주세요.',
-                        validate: (value) =>
-                            value === getValues('password') || '비밀번호가 일치하지 않습니다.',
-                    })}
-                />
-            </Wrapper>
-            {errors.confirm && <span className='errorMessage'>{errors.confirm.message}</span>}
+  //회원가입 데이터 전송
+  const ClickSignUp = (data) => {
+    if (isCheck === false || isAuth === false) {
+      Swal.fire({
+        html: "이메일 인증을 해주세요.",
+        timer: 2000,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        width: 350,
+      });
+    } else {
+      const { email, certificationNum, ...submitData } = data;
+      axios
+        .post(`${SERVER}/api/users/signup`, {
+          ...submitData,
+          email: email + "@kw.ac.kr",
+        })
+        .then((res) => {
+          if (res.status === 201) {
+            Swal.fire({
+              html: "회원가입 완료!<br>잠시 후 창이 자동으로 닫힙니다.",
+              timer: 3000,
+              showConfirmButton: false,
+              timerProgressBar: true,
+              width: 350,
+            }).then(() => {
+              //   window.close();
+              console.log("완료");
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.code === "ERR_BAD_REQUEST") {
+            Swal.fire({
+              html: "오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.",
+              timer: 2000,
+              showConfirmButton: false,
+              timerProgressBar: true,
+              width: 350,
+            });
+          }
+        });
+    }
+  };
 
-            <Wrapper style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', columnGap: '5px' }}> 
-                <input
-                    placeholder='이름'
-                    {...register('name', {
-                        required: '이름을 입력해주세요.',
-                        maxLength: {
-                            value: 8,
-                            message: '이름은 최대 8글자까지 입력 가능합니다.',
-                        },
-                    })}
-                />
-                
-                <select
-                    defaultValue='남자'
-                    {...register('gender', {
-                        required: '성별을 선택해주세요.'
-                    })}
-                >
-                    <optgroup label='성별'>
-                        <option value='남자'>남자</option>
-                        <option value='여자'>여자</option>
-                    </optgroup>
-                </select>
-            </Wrapper>
-            {errors.name && <span className='errorMessage'>{errors.name.message}</span>}
-            {errors.gender && <span className='errorMessage'>{errors.gender.message}</span>}
+  return (
+    <SignUpLayout className="bookPaper" onSubmit={handleSubmit(ClickSignUp)}>
+      <span
+        className="headText"
+        style={{
+          fontSize: 24,
+          fontWeight: "bold",
+          alignItems: "center",
+          marginBottom: "30px",
+        }}
+      >
+        회원가입
+      </span>
+      <Wrapper
+        style={{
+          display: "grid",
+          gridTemplateColumns: "4fr 3fr 3fr",
+          columnGap: "5px",
+        }}
+      >
+        <input
+          placeholder="이메일"
+          {...register("email", {
+            required: "이메일을 입력해주세요.",
+            maxLength: {
+              value: 10,
+              message: "10글자 이하로 작성해주세요",
+            },
+            minLength: {
+              value: 4,
+              message: "4글자 이상으로 작성해주세요",
+            },
+            pattern: {
+              value: /^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,10}$/,
+              message: "형식에 맞지 않는 이메일 입니다.",
+            },
+            onChange: () => {
+              setIsCheck(false);
+              setIsAuth(false);
+            },
+          })}
+        />
+        <span style={{ margin: "12px 2px 0px" }}>@kw.ac.kr</span>
+        <button type="button" onClick={ClickCheck}>
+          중복 확인
+        </button>
+      </Wrapper>
+      {errors.email && (
+        <span className="errorMessage">{errors.email.message}</span>
+      )}
 
-            <Wrapper>
-                <input
-                    placeholder='생년월일 8자리'
-                    {...register('birth', {
-                        required: '생년월일을 입력해주세요.',
-                        validate: validateBirthday,
-                    })}
-                />
-            </Wrapper>
-            {errors.birth && <span className='errorMessage'>{errors.birth.message}</span>}
+      <Wrapper
+        style={{
+          display: "grid",
+          gridTemplateColumns: "3fr 1fr",
+          columnGap: "5px",
+        }}
+      >
+        <input
+          placeholder="인증번호"
+          {...register("certificationNum", {
+            required: "인증번호를 입력해주세요.",
+          })}
+        />
+        <button type="button" onClick={ClickAuth}>
+          인증
+        </button>
+      </Wrapper>
+      {errors.certificationNum && (
+        <span className="errorMessage">{errors.certificationNum.message}</span>
+      )}
 
-            {/*
+      <Wrapper>
+        <input
+          placeholder="비밀번호"
+          type="password"
+          {...register("password", {
+            required: "비밀번호를 입력해주세요.",
+            minLength: {
+              value: 8,
+              message: "비밀번호는 최소 8글자 이상 입력해주세요.",
+            },
+            maxLength: {
+              value: 20,
+              message: "비밀번호는 최대 20글자까지 입력 가능합니다.",
+            },
+          })}
+        />
+      </Wrapper>
+      {errors.password && (
+        <span className="errorMessage">{errors.password.message}</span>
+      )}
+
+      <Wrapper>
+        <input
+          placeholder="비밀번호 확인"
+          type="password"
+          {...register("confirm", {
+            required: "비밀번호를 다시 입력해주세요.",
+            validate: (value) =>
+              value === getValues("password") ||
+              "비밀번호가 일치하지 않습니다.",
+          })}
+        />
+      </Wrapper>
+      {errors.confirm && (
+        <span className="errorMessage">{errors.confirm.message}</span>
+      )}
+
+      <Wrapper
+        style={{
+          display: "grid",
+          gridTemplateColumns: "3fr 1fr",
+          columnGap: "5px",
+        }}
+      >
+        <input
+          placeholder="이름"
+          {...register("name", {
+            required: "이름을 입력해주세요.",
+            maxLength: {
+              value: 8,
+              message: "이름은 최대 8글자까지 입력 가능합니다.",
+            },
+          })}
+        />
+
+        <select
+          defaultValue="남자"
+          {...register("gender", {
+            required: "성별을 선택해주세요.",
+          })}
+        >
+          <optgroup label="성별">
+            <option value="남자">남자</option>
+            <option value="여자">여자</option>
+          </optgroup>
+        </select>
+      </Wrapper>
+      {errors.name && (
+        <span className="errorMessage">{errors.name.message}</span>
+      )}
+      {errors.gender && (
+        <span className="errorMessage">{errors.gender.message}</span>
+      )}
+
+      <Wrapper>
+        <input
+          placeholder="생년월일 8자리"
+          {...register("birth", {
+            required: "생년월일을 입력해주세요.",
+            validate: validateBirthday,
+          })}
+        />
+      </Wrapper>
+      {errors.birth && (
+        <span className="errorMessage">{errors.birth.message}</span>
+      )}
+
+      {/*
             <Wrapper style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', columnGap: '5px' }}>
                 <select
                     defaultValue='소프트웨어학부'
@@ -402,24 +454,26 @@ function SignUp() {
             {errors.classof && <span className='errorMessage'>{errors.classof.message}</span>}
 
             */}
-            <Wrapper style={{ marginTop: '25px' }}>
-                <button className='primaryButton' type='submit'>회원가입</button>
-            </Wrapper>
-        </SignUpLayout>
-    );
+      <Wrapper style={{ marginTop: "25px" }}>
+        <button className="primaryButton" type="submit">
+          회원가입
+        </button>
+      </Wrapper>
+    </SignUpLayout>
+  );
 }
 
 export default SignUp;
 
 const SignUpLayout = styled.form`
-    margin: auto;
-    flex: none;
-    width: 300px;
-    padding: 20px;
+  margin: auto;
+  flex: none;
+  width: 300px;
+  padding: 20px;
 `;
 
 const Wrapper = styled.div`
-    display: grid;
-    margin-top: 10px;
-    height: 40px;
+  display: grid;
+  margin-top: 10px;
+  height: 40px;
 `;
