@@ -117,7 +117,7 @@ function SignUp() {
         }
         else {
             axios
-            .post(`${SERVER}/api/users/emailcheck/auth`, { authNumber: authNumber })
+            .post(`${SERVER}/api/users/emailcheck/auth`, { certificationNum: authNumber })
             .then((res) => {
                 if (res.status === 200) {
                     Swal.fire({
