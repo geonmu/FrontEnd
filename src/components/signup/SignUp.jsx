@@ -106,6 +106,8 @@ function SignUp() {
 
     const ClickAuth = () => {
         const certificationNum = watch('certificationNum');
+        console.log(certificationNum)
+
         if (isCheck === false) {
             Swal.fire({
                 html: '이메일 중복 확인을 해주세요.',
@@ -116,41 +118,52 @@ function SignUp() {
             });
         }
         else {
-            axios
-            .post(`${SERVER}/api/users/emailcheck/auth`, { certificationNum: certificationNum })
-            .then((res) => {
-                if (res.status === 200) {
-                    Swal.fire({
-                        html: '인증 되었습니다.',
-                        timer: 3000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        width: 350
-                    });
-                    setIsAuth(true);
-                }
-            })
-            .catch((error) => {
-                if (error.code === "ERR_BAD_REQUEST") {
-                    Swal.fire({
-                        html: '인증번호가 올바르지 않습니다.',
-                        timer: 2000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        width: 350
-                    });
-                }
-                else {
-                    Swal.fire({
-                        html: '오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.',
-                        timer: 2000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        width: 350
-                    });
-                }
-                setIsAuth(false);
-            });
+            if (certificationNum === '') {
+                Swal.fire({
+                    html: '인증번호를 입력해주세요.',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    width: 350
+                });
+            }
+            else {
+                axios
+                .post(`${SERVER}/api/users/emailcheck/auth`, { certificationNum: certificationNum })
+                .then((res) => {
+                    if (res.status === 200) {
+                        Swal.fire({
+                            html: '인증 되었습니다.',
+                            timer: 3000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            width: 350
+                        });
+                        setIsAuth(true);
+                    }
+                })
+                .catch((error) => {
+                    if (error.code === "ERR_BAD_REQUEST") {
+                        Swal.fire({
+                            html: '인증번호가 올바르지 않습니다.',
+                            timer: 2000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            width: 350
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            html: '오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.',
+                            timer: 2000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            width: 350
+                        });
+                    }
+                    setIsAuth(false);
+                });
+            }
         }
     };
 
