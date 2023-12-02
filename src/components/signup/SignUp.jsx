@@ -130,7 +130,7 @@ function SignUp() {
             }
             else {
                 axios
-                .post(`${SERVER}/api/users/emailcheck/auth`, { email: email + '@kw.ac.kr', certificationNum: certificationNum })
+                .post(`${SERVER}/api/users/emailcheck/auth`, { email: email, certificationNum: certificationNum })
                 .then((res) => {
                     if (res.status === 200) {
                         Swal.fire({
