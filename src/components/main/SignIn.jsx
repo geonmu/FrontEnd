@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { setCookie, decodeCookie } from '../../shared/Cookies';
+import { setCookie } from '../../shared/Cookies';
 
 function SignIn() {
-    const [user, setUser] = useState();
-    const decode = decodeCookie("accessToken");
-
     const {
         register,
         handleSubmit,
@@ -19,14 +15,12 @@ function SignIn() {
 
         axios
         .post(`${SERVER}/api/users/login`, data).then((res) => {
-            // const userId = res.data.userId;
             const accessToken = res.data.accesstoken;
             const refreshToken = res.data.refreshtoken;
             setCookie("accessToken", accessToken);
             setCookie("refreshToken", refreshToken);
             if (res.statusText === "OK") {
                 window.location.reload();
-                // navigate(`/HomeP/${userId}`);
             }
         })
         .catch((error) => {

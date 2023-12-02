@@ -8,8 +8,16 @@ function Welcome() {
 
     const decode = decodeCookie("accessToken");
 
+    function ClickEdit() {
+        window.open('/edit', '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
+    }
+
     function ClickMyMinihompy() {
         window.open(`/minihompy/${decode.userId}`, '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
+    }
+
+    function ClickDotori() {
+        alert('준비중입니다.');
     }
 
     function ClickSurfing() {
@@ -30,8 +38,8 @@ function Welcome() {
                 <div style={{ textAlign: 'center', gridRowStart: 1, gridRowEnd: 4 }} >
                     <img className='profileImage' src={ProfileImage} alt='프로필사진' style={{ width: '100%' }}/>
                 </div>
-                <button>프로필 편집 ⚙️</button>
-                <button>도토리 충전 🌰</button>
+                <button onClick={ClickEdit}>프로필 편집 ⚙️</button>
+                <button onClick={ClickDotori}>도토리 충전 🌰</button>
                 <button onClick={ClickSurfing}>파도타기 🌊</button>
                 <button className='primaryButton' onClick={ClickMyMinihompy}>내 미니홈피 바로가기</button>
                 <button onClick={ClickLogout}>로그아웃 🚪</button>
