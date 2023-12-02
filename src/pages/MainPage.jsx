@@ -25,20 +25,6 @@ function MainPage() {
   const [user, setUser] = useState();
   const decode = decodeCookie("accessToken");
   console.log(decode);
-
-  function userHome() {
-    if (Number(decode?.userId)) {
-      axios.get(`${SERVER}/api/users/myhome/${decode.userId}`).then((res) => {
-        console.log(res);
-        setUser(res.data.data);
-      });
-    }
-  }
-  
-  useEffect(() => {
-    userHome();
-  }, []);
-
   
 
   const backgroundPreload = () => {
@@ -62,7 +48,7 @@ function MainPage() {
         <Book display='grid'>
           <div className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 6fr'}}>
             { 
-              Number(user?.userId) ? 
+              Number(decode?.userId) ? 
               <>
               <span className='headText' style={{ fontSize: 24, fontWeight: 'bold' }}>{user?.name}님 반갑습니다!</span>
               <Welcome />
