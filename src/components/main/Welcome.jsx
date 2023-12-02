@@ -1,13 +1,15 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import { removeCookie } from '../../shared/Cookies';
+import { decodeCookie, removeCookie } from '../../shared/Cookies';
 import ProfileImage from '../../images/profile_image.png'
 
 function Welcome() {
     const SERVER = process.env.REACT_APP_SERVER;
 
+    const decode = decodeCookie("accessToken");
+
     function ClickMyMinihompy() {
-        window.open('/minihompy/${user.userId}', '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
+        window.open('/minihompy/${decode.userId}', '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
     }
 
     function ClickSurfing() {

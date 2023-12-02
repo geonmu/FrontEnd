@@ -50,7 +50,7 @@ function MainPage() {
             { 
               Number(decode?.userId) ? 
               <>
-              <span className='headText' style={{ fontSize: 24, fontWeight: 'bold' }}>{user?.name}님 반갑습니다!</span>
+              <span className='headText' style={{ fontSize: 24, fontWeight: 'bold' }}>{decode?.name}님 반갑습니다!</span>
               <Welcome />
               </>
               :
