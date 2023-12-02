@@ -105,7 +105,7 @@ function SignUp() {
     };
 
     const ClickAuth = () => {
-        const authNumber = watch('authNumber');
+        const certificationNum = watch('certificationNum');
         if (isCheck === false) {
             Swal.fire({
                 html: '이메일 중복 확인을 해주세요.',
@@ -117,7 +117,7 @@ function SignUp() {
         }
         else {
             axios
-            .post(`${SERVER}/api/users/emailcheck/auth`, { certificationNum: authNumber })
+            .post(`${SERVER}/api/users/emailcheck/auth`, { certificationNum: certificationNum })
             .then((res) => {
                 if (res.status === 200) {
                     Swal.fire({
@@ -167,7 +167,7 @@ function SignUp() {
             });
         }
         else {
-        const { authNumber, ...submitData } = data;
+        const { certificationNum, ...submitData } = data;
         axios
         .post(`${SERVER}/api/users/signup`, submitData)
         .then((res) => {
@@ -219,13 +219,13 @@ function SignUp() {
             <Wrapper style={{ display: 'grid', gridTemplateColumns: '4fr 1fr', columnGap: '5px' }}>
                 <input
                     placeholder='인증번호'
-                    {...register('authNumber', {
+                    {...register('certificationNum', {
                     required: '인증번호를 입력해주세요.',
                     })}
                 />
                 <button type='button' onClick={ClickAuth}>인증</button>
             </Wrapper>
-            {errors.authNumber && <span className='errorMessage'>{errors.authNumber.message}</span>}
+            {errors.certificationNum && <span className='errorMessage'>{errors.certificationNum.message}</span>}
 
             <Wrapper>
                 <input
