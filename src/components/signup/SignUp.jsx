@@ -55,7 +55,7 @@ function SignUp() {
 
     //이메일 중복검사
     const ClickCheck = () => {
-        const email = watch('email') + '@kw.ac.kr';
+        const email = watch('email');
         if (email === '') {
             Swal.fire({
                 html: '이메일을 입력해주세요.',
@@ -67,7 +67,7 @@ function SignUp() {
         }
         else {
             axios
-            .post(`${SERVER}/api/users/emailcheck`, { email: email })
+            .post(`${SERVER}/api/users/emailcheck`, { email: email + '@kw.ac.kr' })
             .then((res) => {
                 if (res.status === 200) {
                     Swal.fire({
