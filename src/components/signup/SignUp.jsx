@@ -67,7 +67,7 @@ function SignUp() {
         }
         else {
             axios
-            .post(`${SERVER}/api/users/emailcheck`, { email: email })
+            .post(`${SERVER}/api/users/emailcheck`, { email: email + '@kw.ac.kr' })
             .then((res) => {
                 if (res.status === 200) {
                     Swal.fire({
@@ -200,18 +200,15 @@ function SignUp() {
     return (
         <SignUpLayout className='bookPaper' onSubmit={handleSubmit(ClickSignUp)}>
             <span className='headText' style={{ fontSize: 24, fontWeight: 'bold', alignItems: 'center', marginBottom: '30px' }}>회원가입</span>
-            <Wrapper style={{ display: 'grid', gridTemplateColumns: '7fr 3fr', columnGap: '5px' }}>
+            <Wrapper style={{ display: 'grid', gridTemplateColumns: '4fr 3fr 3fr', columnGap: '5px' }}>
                 <input
-                    placeholder='이메일 (@kw.ac.kr)'
+                    placeholder='이메일'
                     {...register('email', {
                     required: '이메일을 입력해주세요.',
-                    pattern: {
-                        value: /^[a-z0-9_.]+@kw+\.ac+\.kr/,
-                        message: 'kw.ac.kr 도메인의 이메일만 가입 가능합니다.',
-                    },
                     onChange: () => {setIsCheck(false); setIsAuth(false);},
                     })}
                 />
+                <span style={{margin: '12px 3px 0px'}}>@kw.ac.kr</span>
                 <button type='button' onClick={ClickCheck}>중복 확인</button>
             </Wrapper>
             {errors.email && <span className='errorMessage'>{errors.email.message}</span>}
