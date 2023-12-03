@@ -37,5 +37,4 @@ const Background = styled.div`
       linear-gradient(to right, var(--gray) 1px, transparent 1px),
       linear-gradient(to bottom, var(--gray) 1px, transparent 1px);
     background-color: var(--dark-gray);
-
 `;
