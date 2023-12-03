@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import axios from 'axios';
+import React, { useLayoutEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { setCookie, decodeCookie, removeCookie } from '../shared/Cookies';
+import { decodeCookie } from '../shared/Cookies';
 import SignIn from '../components/main/SignIn'
 import Welcome from '../components/main/Welcome'
 import Book from '../components/layout/Book';
@@ -12,21 +11,14 @@ import Background3 from '../images/background/background3.png';
 
 
 
-
-
 /* 배경 이미지 미리 불러오기 */
 let images = [];
 let backgroundImages = [Background1, Background2, Background3];
 
 
 function MainPage() {
-  const SERVER = process.env.REACT_APP_SERVER;
-
-  const [user, setUser] = useState();
   const decode = decodeCookie("accessToken");
-  console.log(decode);
   
-
   const backgroundPreload = () => {
     for(let i  = 0; i < backgroundImages.length; i++) {
       images[i] = new Image();

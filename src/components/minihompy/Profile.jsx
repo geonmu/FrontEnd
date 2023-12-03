@@ -1,12 +1,24 @@
 import React from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import ProfileImage from '../../images/profile_image.png'
 
-function ClickSurfing() {
-    alert('pado');
-}
 
 function Profile() {
+    console.log(window.location.pathname);
+
+    const SERVER = process.env.REACT_APP_SERVER;
+
+    function ClickSurfing() {
+        axios.get(`${SERVER}/api/users/surfing`).then((res) => {
+            const random = res.data.data;
+            console.log('랜덤' + random);
+            console.log(window.location.pathname);
+        });
+
+        //window.location.replace(`/minihompy/${random}`);
+    }
+
     return(
         <ProfileBox>
             <section>

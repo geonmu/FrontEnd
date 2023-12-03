@@ -2,13 +2,14 @@ import styled from "styled-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { getCookie } from "../../shared/Cookies";
+import { getCookie, decodeCookie } from "../../shared/Cookies";
 import { useParams } from "react-router-dom";
 import ProfileImage from '../../images/profile_image.png'
 
 function Home() {
   const { register, handleSubmit, reset } = useForm();
   const SERVER = process.env.REACT_APP_SERVER;
+  const decode = decodeCookie("accessToken");
   const param = useParams();
 
   //일촌평 받아오기
@@ -18,21 +19,22 @@ function Home() {
   const accessToken = getCookie("accessToken");
   const refreshToken = getCookie("refreshToken");
 
+  function illChonGet() {
+    axios.get(`${SERVER}/api/bests/${param.userId}`).then((res) => {
+      setChon(res.data.data);
+    });
+  }
+
   //일촌평 작성하기
   async function illChonWrite(data) {
     await axios
-      .post(`${SERVER}/bests/${param.userId}`, data, {
+      .post(`${SERVER}/api/bests/${param.userId}`, data, {
         headers: {
           accessToken,
           refreshToken,
         },
-      })
-      .then((res) => {
-        console.log('success');
-      })
-      .catch((e) => {
-        console.log('fail');
       });
+    console.log('성공');
     illChonGet();
     reset();
   }
@@ -40,7 +42,7 @@ function Home() {
   //일촌평 삭제하기
   async function illChonDelete(e) {
     await axios
-      .delete(`${SERVER}/bests/${e}/${param.userId}`, {
+      .delete(`${SERVER}/api/bests/${e}/${param.userId}`, {
         headers: {
           accessToken,
           refreshToken,
@@ -57,7 +59,7 @@ function Home() {
 
   //일촌평 조회하기
   function illChonGet() {
-    axios.get(`${SERVER}/bests/${param.userId}`).then((res) => {
+    axios.get(`${SERVER}/api/bests/${param.userId}`).then((res) => {
       setChon(res.data.data);
     });
   }
@@ -69,29 +71,37 @@ function Home() {
 
   return (
       <HomeLayout>
-        <section>
+        <section style={{ borderBottom: '3px solid var(--light-gray)' }}>
           <span className='fontText' style={{ fontSize: 24, color: 'var(--blue)' }}>My Canvas</span>
         </section>
         <section>
           <img className='canvasImage' src={ProfileImage} alt='캔버스' style={{ width: '100%' }} />
         </section>
         
-          <Illchon as="form" onSubmit={handleSubmit(illChonWrite)}>
-            <p>일촌평</p>
+          <CommentForm onSubmit={handleSubmit(illChonWrite)}>
+            <span>한줄평</span>
+            <input
+              readOnly
+              style={{ width: '70px' }}
+              placeholder="이름"
+              value={decode.name}
+              required
+              {...register("nick")}
+            />
             <input
               type="text"
-              placeholder="일촌과 나누고 싶은 이야기를 나눠보세요~!"
-              style={{ width: 320 }}
-              maxLength="30"
+              placeholder="한줄평을 남겨보세요~!"
+              style={{ width: '280px' }}
+              maxLength='30'
               required
               {...register("ilchonpyung")}
             />
             <button type="submit">등록</button>
-          </Illchon>
-          <IllChonBox>
+          </CommentForm>
+          <CommentList>
             {chon?.map((item) => {
               return (
-                <IllBox key={item.ilchonpyungId}>
+                <Comment key={item.ilchonpyungId}>
                   <p>
                     · {item.ilchonpyung} ({item.nick} <span>{item.name}</span>)
                   </p>
@@ -100,73 +110,61 @@ function Home() {
                       삭제
                     </button>
                   </BooksButton>
-                </IllBox>
+                </Comment>
               );
             })}
-          </IllChonBox>
+          </CommentList>
       </HomeLayout>
   );
 }
 export default Home;
 
-const HomeLayout = styled.form`
+const HomeLayout = styled.div`
+  width: 500px;
   display: grid;
-  grid-template-rows: 25px 264px 0px;
+  grid-template-rows: 30px 250px 45px 85px;
   row-gap: 5px;
 `;
 
-
-/*제목 주소*/
-const Title = styled.p`
-  font-weight: 700;
-  margin: 5px 0px 10px 0px;
-  color: #1ea7cc;
-`;
-
 /*일촌평 남기기*/
-const Illchon = styled.form`
+const CommentForm = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 35px;
-  margin: 10px 0px 10px 0px;
   background-color: var(--light-gray);
+  border-radius: 5px;
+
+  margin: 5px 0px;
+
   input {
     height: 25px;
     margin: 0px 5px 0px 5px;
-    border: 1px solid #dedddd;
-    &:focus {
-      outline: none;
-    }
   }
-  p {
+  span {
     font-weight: 700;
-    color: #1ea7cc;
+    color: var(--blue);
   }
+
   button {
-    background-color: #ffffff;
-    border: 1px solid #dedddd;
-    :hover {
-      background-color: #e0e0e0;
-      cursor: pointer;
-    }
+    height: 20px;
   }
 `;
 
 /*일촌평 담는 박스*/
-const IllChonBox = styled.div`
+const CommentList = styled.div`
   display: flex;
   flex-direction: column;
   color: var(--light-gray);
   overflow: auto;
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   p {
     margin-bottom: 5px;
   }
   span {
     font-weight: 600;
-    color: #1ea7cc;
+    color: var(--blue);
   }
 `;
 
@@ -174,14 +172,11 @@ const IllChonBox = styled.div`
 const BooksButton = styled.div`
   margin-right: 20px;
   button {
-    border: none;
     font-size: 0.8rem;
-    cursor: pointer;
-    background-color: white;
   }
 `;
 
-const IllBox = styled.div` 
+const Comment = styled.div` 
   display: flex;
   justify-content: space-between;
 `;

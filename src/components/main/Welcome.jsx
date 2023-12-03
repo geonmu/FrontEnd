@@ -7,13 +7,14 @@ function Welcome() {
     const SERVER = process.env.REACT_APP_SERVER;
 
     const decode = decodeCookie("accessToken");
-
-    function ClickEdit() {
-        window.open('/edit', '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
-    }
+    console.log(decode);
 
     function ClickMyMinihompy() {
         window.open(`/minihompy/${decode.userId}`, '_blank', 'width=400px height=600px toolbar=no resizable=no status=no menubar=no')
+    }
+
+    function ClickEdit() {
+        window.open('/edit', '_blank', 'width=600px height=800px toolbar=no resizable=no status=no menubar=no')
     }
 
     function ClickDotori() {

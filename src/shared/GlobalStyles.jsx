@@ -125,7 +125,7 @@ const GlobalStyles = createGlobalStyle`
         background-position: center center;
         object-fit: cover;
         border-radius: 6px;
-        box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.25);
+        box-shadow: 4px 4px rgb(0, 0, 0, 0.05);
     }
 `;
 

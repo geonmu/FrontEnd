@@ -158,10 +158,11 @@ function Edit() {
             {errors.birth && <span className='errorMessage'>{errors.birth.message}</span>}
             {errors.gender && <span className='errorMessage'>{errors.gender.message}</span>}
 
-            <Wrapper style={{ gridTemplateColumns: '2fr 1fr 1fr', marginTop: '10px' }}> 
+            {/* 
+            <Wrapper style={{ gridTemplateColumns: '3fr 1fr', marginTop: '10px' }}> 
             <select
                     defaultValue='소프트웨어학부'
-                    {...register('major', {
+                    {...register('department', {
                         required: '학과를 선택해주세요.'
                     })}
                 >
@@ -217,7 +218,7 @@ function Edit() {
 
                 <select
                     defaultValue='23'
-                    {...register('admissionYear', {
+                    {...register('classof', {
                         required: '학번을 선택해주세요.'
                     })}
                 >
@@ -233,24 +234,10 @@ function Edit() {
                         <option value='화석'>화석</option>
                     </optgroup>
                 </select>
-
-                <select
-                    defaultValue='공개'
-                    {...register('publicProfile', {
-                        required: '프로필 공개 여부를 선택해주세요.'
-                    })}
-                >
-                    <optgroup label='프로필 공개 여부'>
-                        <option value='공개'>공개</option>
-                        <option value='비공개'>비공개</option>
-                    </optgroup>
-                </select>
             </Wrapper>
-            {errors.major && <span className='errorMessage'>{errors.major.message}</span>}
-            {errors.admissionYear && <span className='errorMessage'>{errors.admissionYear.message}</span>}
-            {errors.publicProfile && <span className='errorMessage'>{errors.publicProfile.message}</span>}
-
-            {/*
+            {errors.department && <span className='errorMessage'>{errors.department.message}</span>}
+            {errors.classof && <span className='errorMessage'>{errors.classof.message}</span>}
+            
             <label>비밀번호 변경</label>
             <Wrapper style={{ gridTemplateColumns: '1fr 1fr' }}>
                 <input

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Edit from '../components/edit/edit'
+import Edit from '../components/edit/Edit'
 
 function ProfilePage() {
     return (

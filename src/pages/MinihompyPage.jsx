@@ -1,11 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import axios from 'axios';
 import styled from 'styled-components';
 import Profile from '../components/minihompy/Profile';
 import Home from '../components/minihompy/Home';
-import Guestbook from '../components/minihompy/Guestbook';
+import Diary from '../components/minihompy/Diary';
 import Book from '../components/layout/Book'
 
 function MinihompyPage() {
+    useEffect(() => {
+        userHome();
+    }, []);
+
+    const SERVER = process.env.REACT_APP_SERVER;
+    const [user, setUser] = useState({});
+    const param = useParams();
+    console.log(param);
+
+    function userHome() {
+        axios.get(`${SERVER}/api/users/myhome/${param.userId}`).then((res) => {
+          setUser(res.data.data);
+          console.log(res);
+        })
+    }
+
     const [content, setContent] = useState("home");
 
     const handleClickButton = e => {
@@ -15,17 +33,17 @@ function MinihompyPage() {
 
     const selectComponent = {
         home: <Home />,
-        guestbook: <Guestbook />,
+        diary: <Diary />,
     };
 
     return (
     <MinihompyPageLayout>
-        <Background/>
+        <Background> 
         <Book width='1000px' height='600px' margin='auto' display='grid' gridTemplateColumns='3fr 7fr'>
             {/* 프로필 영역 */}
             <section className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>
                 <div className='fontText headText'>
-                    TODAY&nbsp;<span style={{ color: 'var(--dark-red)' }}>12</span>&nbsp;| TOTAL 34
+                    TODAY&nbsp;<span style={{ color: 'var(--dark-red)' }}>{user?.today}</span>&nbsp;| TOTAL {user?.total}
                 </div>
                 <Profile/>
             </section>
@@ -36,7 +54,7 @@ function MinihompyPage() {
                     <span className='fontText headText' style={{ justifyContent: 'right' }}>WELCOME TO KWWORLD!</span>
                 </ContentsHead>
                 <ContentsBox>
-                    <div style={{ padding: '24px 67px' }}>
+                    <div style={{ margin: '17px auto' }}>
                         {content && <div>{selectComponent[content]}</div>}
                     </div>
                     <Menu className='fontText'>
@@ -46,14 +64,15 @@ function MinihompyPage() {
                             홈
                         </MenuButton>
                         <MenuButton
-                            className={content === 'guestbook' ? 'active' : ''}
-                            onClick={handleClickButton} name='guestbook'>
-                            방명록
+                            className={content === 'diary' ? 'active' : ''}
+                            onClick={handleClickButton} name='diary'>
+                            다이어리
                         </MenuButton>
                     </Menu>
                 </ContentsBox>
             </section>
         </Book>
+        </Background>
     </MinihompyPageLayout>
     );
 }
@@ -61,15 +80,11 @@ function MinihompyPage() {
 export default MinihompyPage;
 
 const MinihompyPageLayout = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  
-  display: flex;
-  justify-content: center;
-  align-content: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 `;
 
 const Background = styled.div`
@@ -79,12 +94,15 @@ const Background = styled.div`
     left: 0;
     right: 0;
 
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
     background-size: 30px 30px;
     background-image:
       linear-gradient(to right, var(--gray) 1px, transparent 1px),
       linear-gradient(to bottom, var(--gray) 1px, transparent 1px);
     background-color: var(--dark-gray);
-
 `;
 
 const ContentsHead = styled.div`
@@ -102,7 +120,7 @@ const ContentsBox = styled.div`
     box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.2);
 
     display: grid;
-    grid-template-columns: 100% 12%;
+    grid-template-columns: 100% 13%;
 
     row-gap: 3%;
 `;
