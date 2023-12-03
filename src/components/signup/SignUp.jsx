@@ -108,7 +108,6 @@ function SignUp() {
   const ClickAuth = () => {
     const email = watch("email");
     const certificationNum = watch("certificationNum");
-    console.log(email, certificationNum);
 
     if (isCheck === false) {
       Swal.fire({
@@ -195,8 +194,7 @@ function SignUp() {
               timerProgressBar: true,
               width: 350,
             }).then(() => {
-              //   window.close();
-              console.log("완료");
+              window.close();
             });
           }
         })
