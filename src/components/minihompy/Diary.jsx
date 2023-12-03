@@ -38,13 +38,14 @@ function Diary() {
   }, [dispatch, param]);
 
   return (
-      <Content>
-        <DiaryBox>
-          <Posting>
-            다이어리를 작성해 볼까요?
-             <button onClick={openModal}
-            />
-          </Posting>
+      <HomeLayout>
+        <section style={{ borderBottom: '3px solid var(--light-gray)' }}>
+          <span className='fontText' style={{ fontSize: 24, color: 'var(--blue)' }}>Diary</span>
+          <button onClick={openModal} />
+        </section>
+        <section>
+          
+        </section>
           <PostModal open={Modal} close={closeModal} allDiaryId={diaries} />
           {diaries?.map((diary) => (
             <div key={diary.diaryId}>
@@ -74,8 +75,7 @@ function Diary() {
               <CommentList diaryId={diary.diaryId} />
             </div>
           ))}
-        </DiaryBox>
-      </Content>
+      </HomeLayout>
   );
 }
 
@@ -84,47 +84,17 @@ export default Diary;
 //흰색박스
 
 //컨텐츠 들어갈 박스
-const Content = styled.div`
-  margin: 3px 0px 15px 15px;
-  background-color: white;
-  border-radius: 9px;
-  border: 1px solid #cdd5d8;
-  padding: 15px;
-`;
-
-const Posting = styled.div`
-  width: 95%;
-  margin: 10px auto auto auto;
-  font-size: 0.9rem;
+const HomeLayout = styled.div`
+  width: 500px;
+  display: grid;
+  grid-template-rows: 30px 390px;
+  row-gap: 5px;
+  overflow-y: scroll;
 `;
 
 const PostEditBox = styled.div`
   margin-left: 360px;
   margin-top: -5px;
-`;
-
-const DiaryBox = styled.div`
-  width: 100%;
-  height: 300px;
-  margin: auto;
-  padding: 5px;
-  border: 1px dashed #cdd5d8;
-  overflow-y: scroll;
-
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: #cdd5d8;
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: #a3a3a3;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  }
 `;
 
 const PostInfo = styled.div`

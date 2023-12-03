@@ -9,7 +9,7 @@ import ProfileImage from '../../images/profile_image.png'
 function Home() {
   const { register, handleSubmit, reset } = useForm();
   const SERVER = process.env.REACT_APP_SERVER;
-  const decode = decodeCookie("accessToken");
+  const decode = decodeCookie("accesstoken");
   const param = useParams();
 
   //일촌평 받아오기
@@ -19,6 +19,8 @@ function Home() {
   const accessToken = getCookie("accessToken");
   const refreshToken = getCookie("refreshToken");
 
+  console.log(accessToken, refreshToken);
+
   function illChonGet() {
     axios.get(`${SERVER}/api/bests/${param.userId}`).then((res) => {
       setChon(res.data.data);
@@ -27,12 +29,11 @@ function Home() {
 
   //일촌평 작성하기
   async function illChonWrite(data) {
+    // axios.defaults.withCredentials = true;
     await axios
       .post(`${SERVER}/api/bests/${param.userId}`, data, {
-        headers: {
-          accessToken,
-          refreshToken,
-        },
+        //headers:{ Cookie:"accesstoken=" + accessToken },
+            withCredentials:true
       });
     console.log('성공');
     illChonGet();
@@ -81,10 +82,9 @@ function Home() {
           <CommentForm onSubmit={handleSubmit(illChonWrite)}>
             <span>한줄평</span>
             <input
-              readOnly
               style={{ width: '70px' }}
-              placeholder="이름"
-              value={decode.name}
+              placeholder="별명"
+              maxLength='8'
               required
               {...register("nick")}
             />
@@ -92,7 +92,7 @@ function Home() {
               type="text"
               placeholder="한줄평을 남겨보세요~!"
               style={{ width: '280px' }}
-              maxLength='30'
+              maxLength='15'
               required
               {...register("ilchonpyung")}
             />
@@ -102,9 +102,14 @@ function Home() {
             {chon?.map((item) => {
               return (
                 <Comment key={item.ilchonpyungId}>
-                  <p>
-                    · {item.ilchonpyung} ({item.nick} <span>{item.name}</span>)
-                  </p>
+                  <span>
+                    ⦁ {item.ilchonpyung}&nbsp;
+                    ({item.nick}&nbsp;
+                      <span style={{ fontWeight: '600', color: 'var(--blue)' }}>
+                        {item.name}
+                      </span>
+                    )
+                  </span>
                   <BooksButton>
                     <button onClick={() => illChonDelete(item.ilchonpyungId)}>
                       삭제
@@ -155,22 +160,17 @@ const CommentForm = styled.form`
 const CommentList = styled.div`
   display: flex;
   flex-direction: column;
-  color: var(--light-gray);
+  color: var(--light-black);
+  font-size: 0.9rem;
   overflow: auto;
-  width: 90px;
+  width: 480px;
   height: 90px;
-  p {
-    margin-bottom: 5px;
-  }
-  span {
-    font-weight: 600;
-    color: var(--blue);
-  }
+  margin: 0px auto;
 `;
 
 //수정 삭제 버튼
 const BooksButton = styled.div`
-  margin-right: 20px;
+  margin: 0px 5px 0px 0px;
   button {
     font-size: 0.8rem;
   }
@@ -179,4 +179,5 @@ const BooksButton = styled.div`
 const Comment = styled.div` 
   display: flex;
   justify-content: space-between;
+  margin-bottom: 5px;
 `;

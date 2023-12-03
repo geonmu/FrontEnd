@@ -4,16 +4,16 @@ import styled from 'styled-components';
 import ProfileImage from '../../images/profile_image.png'
 
 
-function Profile() {
-    console.log(window.location.pathname);
+function Profile(props) {
+
+    console.log(props);
 
     const SERVER = process.env.REACT_APP_SERVER;
 
     function ClickSurfing() {
         axios.get(`${SERVER}/api/users/surfing`).then((res) => {
             const random = res.data.data;
-            console.log('랜덤' + random);
-            console.log(window.location.pathname);
+            window.location.replace(`/minihompy/${random.userId}`);
         });
 
         //window.location.replace(`/minihompy/${random}`);
@@ -31,15 +31,15 @@ function Profile() {
                 </TodayIs>
             </section>
             <section className='bodyText' style={{ display: 'flex', alignItems: 'center' }}>
-                <span>안녕하세요<br/><br/>최대다섯줄<br/><br/>test</span>
+                <span>{props.user.intro}</span>
             </section>
             <section>
                 <History className='fontText'>
                     <span style={{ color: 'var(--dark-blue)' }}>▶</span>History
                 </History>
                 <div className='bodyText' style={{ marginTop: '5px' }}>
-                    <span>이건무</span>
-                    <span style={{ color: 'var(--dark-gray)', fontSize: 10 }}> 2004.03.09</span><br/>
+                    <span>{props.user.name}</span>
+                    <span style={{ color: 'var(--dark-gray)', fontSize: 10 }}> {props.user.birth}</span><br/>
                     <span style={{ color: 'var(--orange)' }}> 소프트웨어학부</span>
                     <span style={{ color: 'var(--light-orange)', fontSize: 10  }}> 23학번</span>
                 </div>

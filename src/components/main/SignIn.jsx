@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { setCookie } from '../../shared/Cookies';
+import { decodeCookie, setCookie } from '../../shared/Cookies';
+import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
     const {
@@ -9,6 +10,8 @@ function SignIn() {
         handleSubmit,
         formState: { errors },
     } = useForm({mode: 'onSubmit'});
+
+    const navigate = useNavigate();
 
     const ClickSignIn = (data) => {
         const SERVER = process.env.REACT_APP_SERVER;
@@ -21,7 +24,9 @@ function SignIn() {
             setCookie("refreshToken", refreshToken);
             if (res.statusText === "OK") {
                 window.location.reload();
+                //navigate('/');
             }
+            
         })
         .catch((error) => {
             if (error.code === "ERR_BAD_REQUEST") {

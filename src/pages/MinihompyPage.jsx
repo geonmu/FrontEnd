@@ -15,7 +15,6 @@ function MinihompyPage() {
     const SERVER = process.env.REACT_APP_SERVER;
     const [user, setUser] = useState({});
     const param = useParams();
-    console.log(param);
 
     function userHome() {
         axios.get(`${SERVER}/api/users/myhome/${param.userId}`).then((res) => {
@@ -45,7 +44,7 @@ function MinihompyPage() {
                 <div className='fontText headText'>
                     TODAY&nbsp;<span style={{ color: 'var(--dark-red)' }}>{user?.today}</span>&nbsp;| TOTAL {user?.total}
                 </div>
-                <Profile/>
+                <Profile user={user}/>
             </section>
             {/* 컨텐츠 영역 */}
             <section className='bookPaper' style={{ backgroundColor: 'var(--light-gray)', display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>

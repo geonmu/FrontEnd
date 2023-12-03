@@ -40,7 +40,7 @@ function MainPage() {
         <Book display='grid'>
           <div className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 6fr'}}>
             { 
-              Number(decode?.userId) ? 
+              Number(decode?.userId) ? // 쿠키로 로그인여부 판별
               <>
               <span className='headText' style={{ fontSize: 24, fontWeight: 'bold' }}>{decode?.name}님 반갑습니다!</span>
               <Welcome />
