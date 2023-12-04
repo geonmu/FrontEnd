@@ -52,44 +52,30 @@ function CommentList({ diaryId }) {
     <CommentListBox>
       {comments?.map((comm) =>
         comm.diaryId === diaryId ? (
-          <div style={{ display: "flex" }} key={comm.commentId}>
-            <div style={{ width: "40px", fontSize: "0.7rem", marginTop: "3px", marginLeft: "2px" }}>{comm.name}</div>
-            <Comment onChange={onChange} name="comment" placeholder={comm.comment} value={input.comment} disabled={disable} />
+          <CommentBox key={comm.commentId}>
+            <input readOnly value={comm.name}></input>
+            <input onChange={onChange} name='comment' placeholder={comm.comment} value={input.comment} disabled={disable} />
             {disable ? (
-              <CommentEdit>
-                <button onClick={onEdit} style={{ marginTop: "-1px" }} />
-              </CommentEdit>
+              <button onClick={onEdit}>수정</button>
             ) : (
-              <CommentEdit>
-                <button
-                  onClick={() => {
-                    EditSave(comm.commentId);
-                  }}
-                  style={{ marginTop: "-1px" }}
-                />
-              </CommentEdit>
+              <button  onClick={() => {
+                EditSave(comm.commentId);
+              }}
+              >저장</button>
             )}
             {disable ? (
-              <CommentDelete>
                 <button
-                  onClick={() => {
-                    onDelete(comm.commentId);
-                  }}
-                  style={{ marginTop: "-1px" }}
-                />
-              </CommentDelete>
+                  onClick={() => {onDelete(comm.commentId);}}
+                >삭제</button>
             ) : (
-              <CommentDelete>
                 <button
                   onClick={() => {
                     setInput(comm.comment);
                     setDisable(true);
                   }}
-                  style={{ marginTop: "-1px" }}
-                />
-              </CommentDelete>
+                >취소</button>
             )}
-          </div>
+          </CommentBox>
         ) : null
       )}
     </CommentListBox>
@@ -99,39 +85,33 @@ function CommentList({ diaryId }) {
 export default CommentList;
 
 const CommentListBox = styled.div`
-  width: 95%;
-  height: 70px;
-  margin: 5px auto auto 14px;
-  padding: 5px;
-  display: inline-block;
+  margin: 0px auto;
+  display: grid;
+  width: 490px;
+  margin-bottom: 15px;
 `;
 
-const Comment = styled.input`
-  width: 400px;
-  height: 20px;
-  padding: 2px;
-  margin-bottom: 5px;
-  margin-left: 10px;
-  font-size: 0.8rem;
-  font-weight: bold;
-`;
+const CommentBox = styled.div`
+  display: grid;
+  padding: 0px 15px;
+  grid-template-columns: 3fr 12fr 2fr 2fr;
+  column-gap: 5px;
+  align-items: center;
 
-const CommentEdit = styled.button`
-  width: 33px;
-  height: 20px;
-  margin-left: 20px;
-  vertical-align: middle;
-  background-color: #ffffff;
-  border: none;
-  cursor: pointer;
-  font-size: 0.3rem;
-`;
-const CommentDelete = styled.button`
-  width: 33px;
-  height: 20px;
-  vertical-align: middle;
-  background-color: #ffffff;
-  border: none;
-  cursor: pointer;
-  font-size: 0.3rem;
+  height: 35px;
+  background-color: var(--light-gray);
+  border-radius: 5px;
+  margin-top: 5px;
+  
+  input {
+    height: 25px;
+  }
+  span {
+    font-weight: 700;
+    color: var(--blue);
+  }
+
+  button {
+    height: 20px;
+  }
 `;

@@ -38,44 +38,32 @@ function Diary() {
   }, [dispatch, param]);
 
   return (
-      <HomeLayout>
-        <section style={{ borderBottom: '3px solid var(--light-gray)' }}>
+    
+      <DiaryLayout>
+        <section style={{ borderBottom: '3px solid var(--light-gray)', display: 'grid', gridTemplateColumns: '7fr 1fr'  }}>
           <span className='fontText' style={{ fontSize: 24, color: 'var(--blue)' }}>Diary</span>
-          <button onClick={openModal} />
+          <button onClick={openModal} style={{ height: '22px' }}>글쓰기</button>
         </section>
-        <section>
+        <section className='scrollBar' style={{ overflowY: 'scroll' }}>
           
-        </section>
-          <PostModal open={Modal} close={closeModal} allDiaryId={diaries} />
           {diaries?.map((diary) => (
-            <div key={diary.diaryId}>
-              <PostInfo>
-                <PostDate>{diary.updatedAt.split(" ")[0]}</PostDate>
-                <PostNum>No.{diary.diaryNo}</PostNum>
-                <PostEditBox>
-                  <button
-                    onClick={() => onDelete(diary.diaryId)}
-                    style={{
-                      width: "40px",
-                      fontSize: "0.7rem",
-                      marginLeft: "5px",
-                      cursor: "pointer",
-                      marginTop: "10px",
-                    }}
-                  >
-                    삭제
-                  </button>
-                </PostEditBox>
-              </PostInfo>
+            <div key={diary.diaryId} style={{ borderBottom: '2px dotted var(--gray)', marginTop: '10px' }}>
+              <div className="fontText" style={{ display: 'grid', gridTemplateColumns: '1fr 7fr 1fr 6fr', marginBottom: '25px' }}>
+                <span>No.{diary.diaryNo}&nbsp;</span>
+                <span style={{color: 'var(--light-black)'}}>{diary.updatedAt.split(" ")[0]}</span>
+                <button onClick={() => onDelete(diary.diaryId)}>🗑️</button>
+              </div>
               <DiaryImg>
                 <img alt="postImage" style={{ width: "100%", height: "100%" }} src={diary.dirImg} />
               </DiaryImg>
-              <PostContent>{diary.content}</PostContent>
+              <ContentBox>{diary.content}</ContentBox>
               <CommentForm diaryId={diary.diaryId} />
               <CommentList diaryId={diary.diaryId} />
             </div>
           ))}
-      </HomeLayout>
+          </section>
+          <PostModal open={Modal} close={closeModal} allDiaryId={diaries} />
+      </DiaryLayout>
   );
 }
 
@@ -84,48 +72,29 @@ export default Diary;
 //흰색박스
 
 //컨텐츠 들어갈 박스
-const HomeLayout = styled.div`
+const DiaryLayout = styled.div`
   width: 500px;
   display: grid;
   grid-template-rows: 30px 390px;
   row-gap: 5px;
-  overflow-y: scroll;
-`;
 
-const PostEditBox = styled.div`
-  margin-left: 360px;
-  margin-top: -5px;
-`;
-
-const PostInfo = styled.div`
-  display: flex;
-  margin-left: 14px;
-  margin-top: 10px;
-`;
-
-const PostDate = styled.div`
-  font-size: 0.8rem;
-  margin-top: 10px;
-`;
-const PostNum = styled.div`
-  margin-left: 10px;
-  font-size: 0.8rem;
-  margin-top: 10px;
+  button {
+    font-size: 0.8rem;
+  }
 `;
 
 const DiaryImg = styled.div`
-  width: 95%;
-  height: 300px;
+  width: 100px;
+  height: 100px;
   margin: 5px auto;
 `;
 
-const PostContent = styled.div`
-  width: 95%;
+const ContentBox = styled.div`
+  width: 450px;
   height: 100px;
-  margin: 5px auto auto auto;
+  margin: 10px auto;
   padding: 15px;
   display: flex;
-  border: 1px solid #cdd5d8;
-  border-radius: 10px;
-  font-size: 0.8rem;
+  border: 1px solid var(--light-gray);
+  border-radius: 2px;
 `;

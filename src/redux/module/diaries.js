@@ -6,15 +6,11 @@ const SERVER = process.env.REACT_APP_SERVER;
 
 const accessToken = getCookie("accessToken");
 const refreshToken = getCookie("refreshToken");
-const headers = {
-  accessToken,
-  refreshToken,
-};
 
 // Diary 가져오기
 export const __getDiary = createAsyncThunk("diaries/getDiary", async (payload, thunkAPI) => {
   try {
-    const { data } = await axios.get(`${SERVER}/api/diaries/${payload}`, { headers });
+    const { data } = await axios.get(`${SERVER}/api/diaries/${payload}`, { withCredentials: true });
     return thunkAPI.fulfillWithValue(data.data);
   } catch (e) {
     return thunkAPI.rejectWithValue(e);
@@ -24,7 +20,7 @@ export const __getDiary = createAsyncThunk("diaries/getDiary", async (payload, t
 // Diary 삭제
 export const __deleteDiary = createAsyncThunk("diaries/deleteDiary", async (payload, thunkAPI) => {
   try {
-    await axios.delete(`${SERVER}/api/diaries/${payload.diaryId}/${payload.param}`, { headers });
+    await axios.delete(`${SERVER}/api/diaries/${payload.diaryId}/${payload.param}`, { withCredentials: true });
     return thunkAPI.fulfillWithValue(payload);
   } catch (e) {
     return thunkAPI.rejectWithValue(e);
@@ -35,7 +31,7 @@ export const __deleteDiary = createAsyncThunk("diaries/deleteDiary", async (payl
 export const __editDiary = createAsyncThunk("diaries/editDiary", async (payload, thunkAPI) => {
   // payload로 diaryId가 와야함
   try {
-    const { data } = await axios.put(`${SERVER}/api/diaries/${payload}/${payload.param}`, payload, { headers });
+    const { data } = await axios.put(`${SERVER}/api/diaries/${payload}/${payload.param}`, payload, { withCredentials: true });
     return thunkAPI.fulfillWithValue(data);
   } catch (e) {
     return thunkAPI.rejectWithValue(e);

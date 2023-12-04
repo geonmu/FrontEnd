@@ -6,15 +6,11 @@ const SERVER = process.env.REACT_APP_SERVER;
 
 const accessToken = getCookie("accessToken");
 const refreshToken = getCookie("refreshToken");
-const headers = {
-  accessToken,
-  refreshToken,
-};
 
 // 댓글 추가
 export const __addComment = createAsyncThunk("comments/addComment", async (payload, thunkApi) => {
   try {
-    const { data } = await axios.post(`${SERVER}/api/diaries/comments/${payload.diaryId}/${payload.param}`, payload, { headers });
+    const { data } = await axios.post(`${SERVER}/api/diaries/comments/${payload.diaryId}/${payload.param}`, payload, { withCredentials: true });
     return thunkApi.fulfillWithValue(data.data);
   } catch (e) {
     return thunkApi.rejectWithValue(e);
@@ -24,7 +20,7 @@ export const __addComment = createAsyncThunk("comments/addComment", async (paylo
 // 댓글 불러오기
 export const __getComment = createAsyncThunk("comments/getComment", async (payload, thunkApi) => {
   try {
-    const { data } = await axios.get(`${SERVER}/api/diaries/comments/${payload}`, { headers });
+    const { data } = await axios.get(`${SERVER}/api/diaries/comments/${payload}`, { withCredentials: true });
     return thunkApi.fulfillWithValue(data.data);
   } catch (e) {
     return thunkApi.rejectWithValue(e);
@@ -34,7 +30,7 @@ export const __getComment = createAsyncThunk("comments/getComment", async (paylo
 // 댓글 삭제
 export const __deleteComment = createAsyncThunk("comments/deleteComment", async (payload, thunkApi) => {
   try {
-    await axios.delete(`${SERVER}/api/diaries/comments/${payload.diaryId}/${payload.commentId}`, { headers });
+    await axios.delete(`${SERVER}/api/diaries/comments/${payload.diaryId}/${payload.commentId}`, { withCredentials: true });
     return thunkApi.fulfillWithValue(payload);
   } catch (e) {
     return thunkApi.rejectWithValue(e);
@@ -44,7 +40,7 @@ export const __deleteComment = createAsyncThunk("comments/deleteComment", async 
 // 댓글 수정
 export const __editSave = createAsyncThunk("comments/editSave", async (payload, thunkApi) => {
   try {
-    const { data } = await axios.put(`${SERVER}/api/diaries/comments/${payload.diaryId}/${payload.commentId}`, payload, { headers });
+    const { data } = await axios.put(`${SERVER}/api/diaries/comments/${payload.diaryId}/${payload.commentId}`, payload, { withCredentials: true });
     return thunkApi.fulfillWithValue(data);
   } catch (e) {
     return thunkApi.rejectWithValue(e);

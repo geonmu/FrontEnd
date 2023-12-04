@@ -9,7 +9,7 @@ const GlobalStyles = createGlobalStyle`
         --black: #3d3d3d;
         --light-black: #666666;
 
-        --dark-gray: #b3b3b3;
+        --dark-gray: #afafaf;
         --gray: #cecece;
         --light-gray: #eaeaea;
 
@@ -36,6 +36,14 @@ const GlobalStyles = createGlobalStyle`
         &::placeholder {
             color: var(--light-black);
         }
+    }
+
+    .scrollBar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+    .scrollBar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
     }
 
     input, button, select {
@@ -76,6 +84,7 @@ const GlobalStyles = createGlobalStyle`
             background-color: var(--blue);
         }
     }
+
 
     /* 싸이월드 폰트 적용 */
     .fontText {

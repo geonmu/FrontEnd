@@ -43,11 +43,7 @@ const PostModal = (props) => {
     formData.append("diaryNo", diaryNo);
     await axios
     .post(`${SERVER}/api/diaries/${param}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          accessToken,
-          refreshToken,
-        },
+        withCredentials: true
       })
       .then((res) => {
         Swal.fire({

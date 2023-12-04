@@ -29,42 +29,20 @@ function CommentForm({ diaryId }) {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
   return (
-    <CommentInputBox>
-      <form onSubmit={Submit}>
-        <Commentinput name="comment" value={input.comment} onChange={onChange} placeholder="댓글을 작성해주세요." />
-        <CommentSave>
-            <button></button>
-        </CommentSave>
-      </form>
-    </CommentInputBox>
+      <CommentFormLayout onSubmit={Submit}>
+        <input name="comment" value={input.comment} onChange={onChange} placeholder="댓글을 작성해주세요." />
+        <button type='submit'>작성</button>
+      </CommentFormLayout>
   );
 }
 
 export default CommentForm;
 
-const CommentInputBox = styled.div`
-  width: 95%;
+const CommentFormLayout = styled.form`
+  display: grid;
+  grid-template-columns: 7fr 1fr;
+  column-gap: 10px;
+  width: 480px;
   height: 30px;
-  margin: 5px auto auto auto;
-  padding: 5px;
-  font-size: 0.8rem;
-`;
-
-const Commentinput = styled.input`
-  width: 90%;
-  height: 20px;
-  border: none;
-  font-size: 0.7rem;
-  vertical-align: middle;
-`;
-
-const CommentSave = styled.button`
-  width: 45px;
-  height: 20px;
-  margin-left: 5px;
-  vertical-align: middle;
-  background-color: #ffffff;
-  border: none;
-  cursor: pointer;
-  font-size: 0.7rem;
+  margin: 15px auto auto auto;
 `;

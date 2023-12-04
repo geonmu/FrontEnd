@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { decodeCookie, setCookie } from '../../shared/Cookies';
+import { setCookie } from '../../shared/Cookies';
 import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
@@ -17,14 +17,11 @@ function SignIn() {
         const SERVER = process.env.REACT_APP_SERVER;
 
         axios
-        .post(`${SERVER}/api/users/login`, data).then((res) => {
-            const accessToken = res.data.accesstoken;
-            const refreshToken = res.data.refreshtoken;
-            setCookie("accessToken", accessToken);
-            setCookie("refreshToken", refreshToken);
+        .post(`${SERVER}/api/users/login`, data, { withCredentials: true }).then((res) => {
+
             if (res.statusText === "OK") {
                 window.location.reload();
-                //navigate('/');
+                // navigate('/');
             }
             
         })

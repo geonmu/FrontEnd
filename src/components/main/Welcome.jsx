@@ -6,7 +6,7 @@ import ProfileImage from '../../images/profile_image.png'
 function Welcome() {
     const SERVER = process.env.REACT_APP_SERVER;
 
-    const decode = decodeCookie("accessToken");
+    const decode = decodeCookie("accesstoken");
     console.log(decode);
 
     function ClickMyMinihompy() {

@@ -29,11 +29,9 @@ function Home() {
 
   //일촌평 작성하기
   async function illChonWrite(data) {
-    // axios.defaults.withCredentials = true;
     await axios
       .post(`${SERVER}/api/bests/${param.userId}`, data, {
-        //headers:{ Cookie:"accesstoken=" + accessToken },
-            withCredentials:true
+        withCredentials: true
       });
     console.log('성공');
     illChonGet();
@@ -44,10 +42,7 @@ function Home() {
   async function illChonDelete(e) {
     await axios
       .delete(`${SERVER}/api/bests/${e}/${param.userId}`, {
-        headers: {
-          accessToken,
-          refreshToken,
-        },
+        withCredentials: true
       })
       .then((res) => {
         console.log('success');
@@ -82,16 +77,13 @@ function Home() {
           <CommentForm onSubmit={handleSubmit(illChonWrite)}>
             <span>한줄평</span>
             <input
-              style={{ width: '70px' }}
               placeholder="별명"
-              maxLength='8'
+              maxLength='6'
               required
               {...register("nick")}
             />
             <input
-              type="text"
               placeholder="한줄평을 남겨보세요~!"
-              style={{ width: '280px' }}
               maxLength='15'
               required
               {...register("ilchonpyung")}
@@ -110,11 +102,9 @@ function Home() {
                       </span>
                     )
                   </span>
-                  <BooksButton>
                     <button onClick={() => illChonDelete(item.ilchonpyungId)}>
                       삭제
                     </button>
-                  </BooksButton>
                 </Comment>
               );
             })}
@@ -129,22 +119,28 @@ const HomeLayout = styled.div`
   display: grid;
   grid-template-rows: 30px 250px 45px 85px;
   row-gap: 5px;
+
+  button {
+    font-size: 0.8rem;
+  }
 `;
 
 /*일촌평 남기기*/
 const CommentForm = styled.form`
-  display: flex;
-  justify-content: center;
+  display: grid;
+  padding: 0px 15px;
+  grid-template-columns: 2fr 3fr 10fr 2fr;
+  column-gap: 5px;
   align-items: center;
+
   height: 35px;
   background-color: var(--light-gray);
   border-radius: 5px;
 
-  margin: 5px 0px;
+  margin: 5px 0px 0px 0px;
 
   input {
     height: 25px;
-    margin: 0px 5px 0px 5px;
   }
   span {
     font-weight: 700;
@@ -168,16 +164,13 @@ const CommentList = styled.div`
   margin: 0px auto;
 `;
 
-//수정 삭제 버튼
-const BooksButton = styled.div`
-  margin: 0px 5px 0px 0px;
-  button {
-    font-size: 0.8rem;
-  }
-`;
 
 const Comment = styled.div` 
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
+
+  button {
+    margin-right: 3px;
+  }
 `;
