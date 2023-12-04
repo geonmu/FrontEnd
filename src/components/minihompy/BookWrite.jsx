@@ -24,10 +24,16 @@ function BookWrite({ getBook }) {
         });
       })
       .catch((e) => {
-        console.log(e);
-        Alert({
-          html: `${e.response.data.errorMessage}`,
-        });
+        if(e.response.data.errorMessage !== undefined) {
+          Alert({
+            html: `${e.response.data.errorMessage}`,
+          })
+        }
+        else {
+          Alert({
+            html: `${e.response.data.msg}`,
+          })
+        }
       });
     getBook();
     reset();
@@ -48,7 +54,7 @@ function BookWrite({ getBook }) {
       <BooksBase>
         <UserBook>
         <img className='profileImage' src={bookImage} alt='방명록 사진' style={{ width: '120px',  backgroundColor: 'white' }}/>
-          <UserWrite
+          <textarea
             maxLength="80"
             required
             {...register("guestbook")}
@@ -81,14 +87,10 @@ const BooksBase = styled.div`
 
 //유저 박스
 const UserBook = styled.div`
+    display: grid;
+    grid-template-columns: 120px 300px;
+    column-gap: 20px;
     margin: 0px auto;
-    display: flex;
-`;
-
-//유저 방명록칸
-const UserWrite = styled.textarea`
-  width: 300px;
-  margin-left: 20px;
 `;
 
 const ButtonBox = styled.div`

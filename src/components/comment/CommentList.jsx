@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { __deleteComment, __editSave, __getComment } from "../../redux/module/comments";
 import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
 import { Alert } from '../../shared/Alert';
 
 function CommentList({ diaryId }) {
@@ -85,7 +84,7 @@ const CommentListBox = styled.div`
   margin: 0px auto;
   display: grid;
   width: 490px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 `;
 
 const CommentBox = styled.div`

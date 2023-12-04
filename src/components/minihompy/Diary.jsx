@@ -46,15 +46,15 @@ function Diary() {
         <section className='scrollBar'>
           
           {diaries?.map((diary) => (
-            <div key={diary.diaryId} style={{ borderBottom: '2px dotted var(--gray)', marginTop: '10px' }}>
+            <div key={diary.diaryId}>
               <DiaryTitle className="fontText">
                 <span>No.{diary.diaryNo}&nbsp;</span>
                 <span style={{color: 'var(--light-black)'}}>{diary.updatedAt.split(" ")[0]}</span>
                 <button onClick={() => onDelete(diary.diaryId)}>🗑️</button>
               </DiaryTitle>
-              <DiaryImg>
-                <img alt="postImage" style={{ width: "100%", height: "100%" }} src={diary.dirImg} />
-              </DiaryImg>
+              <ImageBox>
+                <img alt="postImage" style={{ maxWidth: '450px', maxHeight: '300px', margin: '15px auto 0px' }} src={diary.dirImg} />
+              </ImageBox>
               <ContentBox>{diary.content}</ContentBox>
               <CommentForm diaryId={diary.diaryId} />
               <CommentList diaryId={diary.diaryId} />
@@ -99,15 +99,13 @@ const DiaryTitle = styled.div`
   }
 `;
 
-const DiaryImg = styled.div`
-  width: 100px;
-  height: 100px;
-  margin: 5px auto;
+const ImageBox = styled.div`
+  margin: 0px auto;
+  display: flex;
 `;
 
 const ContentBox = styled.div`
   width: 450px;
-  height: 100px;
   margin: 10px auto;
   padding: 15px;
   display: flex;

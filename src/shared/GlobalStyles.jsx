@@ -74,7 +74,7 @@ const GlobalStyles = createGlobalStyle`
         display: flex;
         justify-content: center;
         align-items: center;
-        box-shadow: 2px 2px rgb(0, 0, 0, 0.2);
+        box-shadow: 1px 1px rgb(0, 0, 0, 0.2);
 
         &:hover {
             filter: brightness(0.95);

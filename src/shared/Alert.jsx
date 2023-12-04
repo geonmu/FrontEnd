@@ -5,7 +5,7 @@ export const Alert = (options) => {
     timer: 2000,
     showConfirmButton: false,
     timerProgressBar: true,
-    width: 350,
+    width: 375,
   };
 
   return Swal.fire({ ...defaultOptions, ...options });
