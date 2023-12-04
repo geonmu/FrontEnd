@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import CanvasDraw from 'react-canvas-draw';
 import styled from 'styled-components';
+import { decodeCookie, removeCookie } from '../shared/Cookies';
 import { Alert } from '../shared/Alert';
 
 function EditPage() {   
@@ -28,38 +29,14 @@ function EditPage() {
         watch,
         formState: { errors },
     } = useForm({mode: 'onBlur'});
-
-    const validateBirthday = (value) => {
-        const validDate = /^\d{8}$/;
-        if (!validDate.test(value)) {
-          return '생년월일은 8자리 숫자 형식으로 입력해주세요.';
-        }
     
-        const year = parseInt(value.substring(0, 4));
-        const month = parseInt(value.substring(4, 6));
-        const day = parseInt(value.substring(6, 8));
-    
-        const date = new Date(year, month - 1, day);
-        const valid = date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
-    
-        if (!valid) {
-          return '생년월일 형식이 올바르지 않습니다.';
-        }
-    
-        return true;
-    };
+    const SERVER = process.env.REACT_APP_SERVER;
+    const decode = decodeCookie("accessToken");
 
     const canvasRef = useRef(null);
     const [brushRadius, setBrushRadius] = useState(2);
     const [brushColor, setBrushColor] = useState('#000000');
     const [isEraser, setIsEraser] = useState(false);
-
-
-    const [profileImage, setProfileImage] = useState(null);
-
-    const handleFileSelect = (event) => {
-        setProfileImage(event.target.files[0]);
-    };
     
     const handleColorChange = (event) => {
         setBrushColor(event.target.value);
@@ -77,27 +54,13 @@ function EditPage() {
     };
 
     function ClickSave() {
-        // 프로필 사진 base64 출력
-        if (profileImage) {
-            const reader = new FileReader();
-            reader.readAsDataURL(profileImage);
-            reader.onloadend = () => {
-                console.log('프로필 사진 Base64:', reader.result);
-            };
-        }
 
-        // 캔버스 이미지 base64 출력
-        if (canvasRef.current) {
-            const canvasImage = canvasRef.current.canvasContainer.children[1].toDataURL();
-            console.log('캔버스 이미지 Base64:', canvasImage);
-        }
     }
 
-    const SERVER = process.env.REACT_APP_SERVER;
-    function asdf(data) {
-      
+
+    function ClickIntroSave(data) {
     axios
-      .put(`${SERVER}/api/users/myhome/1`, data, { withCredentials: true })
+      .put(`${SERVER}/api/users/myhome/${decode.userId}`, data, { withCredentials: true })
       .then((res) => {
         Alert({
           html: `${res.data.msg}`,
@@ -105,30 +68,52 @@ function EditPage() {
       })
     }
 
+    function ClickTodayIsSave(data) {
+        axios
+          .put(`${SERVER}/api/users/myhome/today/${decode.userId}`, data, { withCredentials: true })
+          .then((res) => {
+            Alert({
+              html: `${res.data.msg}`,
+            });
+          })
+        }
+
     return (
       <>
-      <form onSubmit={handleSubmit(asdf)}>
-      <textarea
-        placeholder="인트로"
-        maxLength='30'
-        {...register("intro")}
-        style={{ width: '200px', height: '100px'}}
-      />
-      <button>인트로저장</button>
-
-      </form>
-      </>
-      /*
+      
       <EditPageLayout>
+
         <EditLayout className='bookPaper'>
             <span className='headText' style={{ fontSize: 24, fontWeight: 'bold', alignItems: 'center', marginBottom: '30px' }}>프로필 편집</span>
 
-            <label>프로필 사진</label>
-            <Wrapper style={{ alignItems: 'center' }}>
-                <input type='file' onChange={handleFileSelect} />
+
+            <Wrapper style={{ gridTemplateColumns: '3fr 1fr'}}>
+            <input
+                placeholder="인트로"
+                maxLength='30'
+                {...register("intro")}
+            />
+                <button className='primaryButton' type='button' onClick={() => ClickIntroSave({ intro: getValues("intro") })}>인트로 저장</button>
             </Wrapper>
 
-
+            <Wrapper style={{ gridTemplateColumns: '2fr 1fr'}}>
+            <select
+                defaultValue='행복😊'
+                {...register('sixwords', {
+                    required: 'Today Is... 값을 선택해주세요.'
+                })}
+            >
+                <optgroup label='Today Is...'>
+                    <option value='행복😊'>행복😊</option>
+                    <option value='우울😞'>우울😞</option>
+                    <option value='분노😡'>분노😡</option>
+                    <option value='쏘쏘😕'>쏘쏘😕</option>
+                </optgroup>
+            </select>
+            
+                <button className='primaryButton' type='button' onClick={() => ClickTodayIsSave({ sixwords: getValues("sixwords") })}>Today Is 저장</button>
+            </Wrapper>
+            
             
             
             <label>캔버스</label>
@@ -152,6 +137,7 @@ function EditPage() {
                 <button type='button' onClick={() => canvasRef.current.clear()}>초기화 🗑️</button>
             </Wrapper>
 
+            {/*
             <label>개인정보 변경</label>
             <Wrapper style={{ gridTemplateColumns: '5fr 5fr 2fr' }}> 
                 <input
@@ -301,14 +287,15 @@ function EditPage() {
             {errors.password && <span className='errorMessage'>{errors.password.message}</span>}
             {errors.confirm && <span className='errorMessage'>{errors.confirm.message}</span>}
              
+            */}
             
-            <Wrapper style={{ marginTop: '25px' }}>
-                <button className='primaryButton' type='button' onClick={() => ClickSave()}>변경사항 저장</button>
+            <Wrapper>
+                <button className='primaryButton' type='button' onClick={() => ClickSave()}>캔버스 저장</button>
             </Wrapper>
             
         </EditLayout>
         </EditPageLayout>
-        */
+        </>
     );
 }
 
@@ -326,7 +313,7 @@ const EditPageLayout = styled.div`
   align-content: center;
 `;
 
-const EditLayout = styled.div`
+const EditLayout = styled.form`
     width: 500px;
     padding: 20px;
     margin: auto;
@@ -343,4 +330,5 @@ const Wrapper = styled.div`
     display: grid;
     column-gap: 5px;
     height: 40px;
+    margin-top: 10px;
 `;

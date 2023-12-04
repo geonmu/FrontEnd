@@ -9,11 +9,6 @@ import Guestbook from '../components/minihompy/Guestbook';
 import Book from '../components/layout/Book'
 
 function MinihompyPage() {
-    
-    useEffect(() => {
-        userHome();
-    }, []);
-
     const SERVER = process.env.REACT_APP_SERVER;
     const [user, setUser] = useState({});
     const param = useParams();
@@ -21,7 +16,6 @@ function MinihompyPage() {
     function userHome() {
         axios.get(`${SERVER}/api/users/myhome/${param.userId}`).then((res) => {
           setUser(res.data.data);
-          console.log(res);
         })
     }
 
@@ -37,6 +31,10 @@ function MinihompyPage() {
         diary: <Diary />,
         guestbook: <Guestbook />,
     };
+
+    useEffect(() => {
+        userHome();
+    }, []);
 
     return (
     <MinihompyPageLayout>

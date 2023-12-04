@@ -30,10 +30,10 @@ function Welcome() {
     }
 
     function ClickLogout() {
-        //removeCookie('accesstoken');
-        //removeCookie('refreshtoken');
-        //removeCookie('accessToken');
-        //removeCookie('refreshToken');
+        removeCookie('accesstoken');
+        removeCookie('refreshtoken');
+        removeCookie('accessToken');
+        removeCookie('refreshToken');
 
        axios
       .post(`${SERVER}/api/users/logout`)

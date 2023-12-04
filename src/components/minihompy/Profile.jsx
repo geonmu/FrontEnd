@@ -5,9 +5,6 @@ import ProfileImage from '../../images/profile_image.png'
 
 
 function Profile(props) {
-
-    console.log(props);
-
     const SERVER = process.env.REACT_APP_SERVER;
 
     function ClickSurfing() {
@@ -27,7 +24,7 @@ function Profile(props) {
             <section>
                 <DottedLine />
                 <TodayIs>
-                    <span className='fontText' style={{ color: 'var(--dark-blue)' }}>TODAY IS...</span>&nbsp;&nbsp;최대여섯글자
+                    <span className='fontText' style={{ color: 'var(--dark-blue)' }}>TODAY IS...&nbsp;&nbsp;</span><span>{props.user.sixwords}</span>
                 </TodayIs>
             </section>
             <section className='bodyText' style={{ display: 'flex', alignItems: 'center' }}>
