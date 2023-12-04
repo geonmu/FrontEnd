@@ -6,7 +6,7 @@ import ProfileImage from '../../images/profile_image.png'
 function Welcome() {
     const SERVER = process.env.REACT_APP_SERVER;
 
-    const decode = decodeCookie("accesstoken");
+    const decode = decodeCookie("accessToken");
     console.log(decode);
 
     function ClickMyMinihompy() {
@@ -29,6 +29,8 @@ function Welcome() {
     }
 
     function ClickLogout() {
+        removeCookie('accesstoken');
+        removeCookie('refreshtoken');
         removeCookie('accessToken');
         removeCookie('refreshToken');
         window.location.reload();

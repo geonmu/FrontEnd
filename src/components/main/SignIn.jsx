@@ -18,11 +18,10 @@ function SignIn() {
 
         axios
         .post(`${SERVER}/api/users/login`, data, { withCredentials: true }).then((res) => {
-
             if (res.statusText === "OK") {
-                const decode = decodeCookie("accesstoken");
-                console.log(decode);
-                // window.location.reload();
+                setCookie('accessToken', res.data.accesstoken);
+                setCookie('refreshToken', res.data.refreshtoken); 
+                window.location.reload();
                 // navigate('/');
             }
             
