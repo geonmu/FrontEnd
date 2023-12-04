@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { setCookie } from '../../shared/Cookies';
+import { setCookie,decodeCookie } from '../../shared/Cookies';
 import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
@@ -20,7 +20,9 @@ function SignIn() {
         .post(`${SERVER}/api/users/login`, data, { withCredentials: true }).then((res) => {
 
             if (res.statusText === "OK") {
-                window.location.reload();
+                const decode = decodeCookie("accesstoken");
+                console.log(decode);
+                // window.location.reload();
                 // navigate('/');
             }
             
