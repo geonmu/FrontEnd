@@ -6,7 +6,7 @@ import { __deleteDiary, __getDiary } from "../../redux/module/diaries";
 import CommentForm from "../comment/CommentForm";
 import CommentList from "../comment/CommentList";
 import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Alert } from '../../shared/Alert';
 
 function Diary() {
   const [Modal, setModal] = useState(false);
@@ -26,9 +26,8 @@ function Diary() {
     const result = window.confirm("정말 삭제하시겠습니까?");
     if (!result) return;
     dispatch(__deleteDiary({ diaryId, param }));
-    Swal.fire({
-      icon: "success",
-      title: "삭제 완료!",
+    Alert({
+      html: '삭제 요청을 전송했습니다.',
     });
     dispatch(__getDiary(param));
   };
@@ -42,17 +41,17 @@ function Diary() {
       <DiaryLayout>
         <section style={{ borderBottom: '3px solid var(--light-gray)', display: 'grid', gridTemplateColumns: '7fr 1fr'  }}>
           <span className='fontText' style={{ fontSize: 24, color: 'var(--blue)' }}>Diary</span>
-          <button onClick={openModal} style={{ height: '22px' }}>글쓰기</button>
+          <button onClick={openModal} style={{ height: '20px' }}>글쓰기</button>
         </section>
-        <section className='scrollBar' style={{ overflowY: 'scroll' }}>
+        <section className='scrollBar'>
           
           {diaries?.map((diary) => (
             <div key={diary.diaryId} style={{ borderBottom: '2px dotted var(--gray)', marginTop: '10px' }}>
-              <div className="fontText" style={{ display: 'grid', gridTemplateColumns: '1fr 7fr 1fr 6fr', marginBottom: '25px' }}>
+              <DiaryTitle className="fontText">
                 <span>No.{diary.diaryNo}&nbsp;</span>
                 <span style={{color: 'var(--light-black)'}}>{diary.updatedAt.split(" ")[0]}</span>
                 <button onClick={() => onDelete(diary.diaryId)}>🗑️</button>
-              </div>
+              </DiaryTitle>
               <DiaryImg>
                 <img alt="postImage" style={{ width: "100%", height: "100%" }} src={diary.dirImg} />
               </DiaryImg>
@@ -80,6 +79,23 @@ const DiaryLayout = styled.div`
 
   button {
     font-size: 0.8rem;
+  }
+`;
+
+const DiaryTitle = styled.div`
+  background-color: var(--light-gray);
+  border-top: 1px solid var(--dark-gray);
+  height: 30px;
+  
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  column-gap: 10px;
+
+  align-items: center;
+  place-items: center;
+
+  button {
+    width: max-content;
   }
 `;
 

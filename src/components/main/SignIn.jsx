@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { setCookie,decodeCookie } from '../../shared/Cookies';
+import { setCookie, removeCookie } from '../../shared/Cookies';
 import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
@@ -12,7 +12,7 @@ function SignIn() {
     } = useForm({mode: 'onSubmit'});
 
     const navigate = useNavigate();
-
+    
     const ClickSignIn = (data) => {
         const SERVER = process.env.REACT_APP_SERVER;
 

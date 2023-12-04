@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import CanvasDraw from 'react-canvas-draw';
 import styled from 'styled-components';
+import { Alert } from '../shared/Alert';
 
 function EditPage() {   
     useEffect(() => {
@@ -91,7 +93,32 @@ function EditPage() {
         }
     }
 
+    const SERVER = process.env.REACT_APP_SERVER;
+    function asdf(data) {
+      
+    axios
+      .put(`${SERVER}/api/users/myhome/1`, data, { withCredentials: true })
+      .then((res) => {
+        Alert({
+          html: `${res.data.msg}`,
+        });
+      })
+    }
+
     return (
+      <>
+      <form onSubmit={handleSubmit(asdf)}>
+      <textarea
+        placeholder="인트로"
+        maxLength='30'
+        {...register("intro")}
+        style={{ width: '200px', height: '100px'}}
+      />
+      <button>인트로저장</button>
+
+      </form>
+      </>
+      /*
       <EditPageLayout>
         <EditLayout className='bookPaper'>
             <span className='headText' style={{ fontSize: 24, fontWeight: 'bold', alignItems: 'center', marginBottom: '30px' }}>프로필 편집</span>
@@ -100,6 +127,9 @@ function EditPage() {
             <Wrapper style={{ alignItems: 'center' }}>
                 <input type='file' onChange={handleFileSelect} />
             </Wrapper>
+
+
+            
             
             <label>캔버스</label>
             <div style={{ boxShadow: '0px 0px 10px rgb(0, 0, 0, 0.25)', marginBottom: '10px' }}>
@@ -158,8 +188,9 @@ function EditPage() {
             {errors.name && <span className='errorMessage'>{errors.name.message}</span>}
             {errors.birth && <span className='errorMessage'>{errors.birth.message}</span>}
             {errors.gender && <span className='errorMessage'>{errors.gender.message}</span>}
+            */
 
-            {/* 
+            /* 
             <Wrapper style={{ gridTemplateColumns: '3fr 1fr', marginTop: '10px' }}> 
             <select
                     defaultValue='소프트웨어학부'
@@ -269,7 +300,7 @@ function EditPage() {
             </Wrapper>
             {errors.password && <span className='errorMessage'>{errors.password.message}</span>}
             {errors.confirm && <span className='errorMessage'>{errors.confirm.message}</span>}
-             */}
+             
             
             <Wrapper style={{ marginTop: '25px' }}>
                 <button className='primaryButton' type='button' onClick={() => ClickSave()}>변경사항 저장</button>
@@ -277,6 +308,7 @@ function EditPage() {
             
         </EditLayout>
         </EditPageLayout>
+        */
     );
 }
 
@@ -294,7 +326,7 @@ const EditPageLayout = styled.div`
   align-content: center;
 `;
 
-const EditLayout = styled.form`
+const EditLayout = styled.div`
     width: 500px;
     padding: 20px;
     margin: auto;

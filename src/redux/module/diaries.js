@@ -4,9 +4,6 @@ import { getCookie } from "../../shared/Cookies";
 
 const SERVER = process.env.REACT_APP_SERVER;
 
-const accessToken = getCookie("accessToken");
-const refreshToken = getCookie("refreshToken");
-
 // Diary 가져오기
 export const __getDiary = createAsyncThunk("diaries/getDiary", async (payload, thunkAPI) => {
   try {

@@ -5,21 +5,20 @@ import { useEffect, useState } from "react";
 import { getCookie, decodeCookie } from "../../shared/Cookies";
 import { useParams } from "react-router-dom";
 import ProfileImage from '../../images/profile_image.png'
+import { Alert } from "../../shared/Alert";
 
 function Home() {
   const { register, handleSubmit, reset } = useForm();
   const SERVER = process.env.REACT_APP_SERVER;
-  const decode = decodeCookie("accesstoken");
   const param = useParams();
 
   //일촌평 받아오기
   const [chon, setChon] = useState();
 
   //쿠키설정
-  const accessToken = getCookie("accessToken");
-  const refreshToken = getCookie("refreshToken");
+  //const accessToken = getCookie("accessToken");
+  //const refreshToken = getCookie("refreshToken");
 
-  console.log(accessToken, refreshToken);
 
   function illChonGet() {
     axios.get(`${SERVER}/api/bests/${param.userId}`).then((res) => {
@@ -32,8 +31,24 @@ function Home() {
     await axios
       .post(`${SERVER}/api/bests/${param.userId}`, data, {
         withCredentials: true
+      })
+      .then((res) => {
+        Alert({
+          html: `${res.data.msg}`,
+        })
+      })
+      .catch((e) => {
+        if(e.response.data.errorMessage !== undefined) {
+          Alert({
+            html: `${e.response.data.errorMessage}`,
+          })
+        }
+        else {
+          Alert({
+            html: `${e.response.data.msg}`,
+          })
+        }
       });
-    console.log('성공');
     illChonGet();
     reset();
   }
@@ -45,10 +60,21 @@ function Home() {
         withCredentials: true
       })
       .then((res) => {
-        console.log('success');
+        Alert({
+          html: `${res.data.msg}`,
+        })
       })
       .catch((e) => {
-        console.log('fail');
+        if(e.response.data.errorMessage !== undefined) {
+          Alert({
+            html: `${e.response.data.errorMessage}`,
+          })
+        }
+        else {
+          Alert({
+            html: `${e.response.data.msg}`,
+          })
+        }
       });
     illChonGet();
   }
@@ -63,6 +89,20 @@ function Home() {
   // 유저 정보 가져오기
   useEffect(() => {
     illChonGet();
+  }, []);
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
   }, []);
 
   return (
@@ -84,11 +124,12 @@ function Home() {
             />
             <input
               placeholder="한줄평을 남겨보세요~!"
+              minLength='3'
               maxLength='15'
               required
               {...register("ilchonpyung")}
             />
-            <button type="submit">등록</button>
+            <button type="submit">작성</button>
           </CommentForm>
           <CommentList>
             {chon?.map((item) => {
@@ -97,9 +138,15 @@ function Home() {
                   <span>
                     ⦁ {item.ilchonpyung}&nbsp;
                     ({item.nick}&nbsp;
-                      <span style={{ fontWeight: '600', color: 'var(--blue)' }}>
+                      <text
+                      style={{ fontWeight: '600', color: 'var(--blue)', cursor: 'pointer' }}
+                        onClick={() => {
+                          window.open(
+                            `/minihompy/${item.writerId}`
+                          );
+                        }}>
                         {item.name}
-                      </span>
+                      </text>
                     )
                   </span>
                     <button onClick={() => illChonDelete(item.ilchonpyungId)}>

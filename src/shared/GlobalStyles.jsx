@@ -25,7 +25,7 @@ const GlobalStyles = createGlobalStyle`
         --blue: #4a93ba;
     }
 
-    html, body, input, button, select, option {
+    html, body, input, button, select, option, textarea {
         font-family: 'NanumSquareRoundR';
         line-height: 1;
         font-size: 1rem;
@@ -41,12 +41,14 @@ const GlobalStyles = createGlobalStyle`
     .scrollBar {
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
+        overflow-y: scroll;
     }
     .scrollBar::-webkit-scrollbar {
         display: none; /* Chrome, Safari, Opera*/
+        overflow-y: scroll;
     }
 
-    input, button, select {
+    input, button, select, textarea {
         cursor: pointer;
         border-radius: 4px;
         border: 1px solid var(--gray);
@@ -64,8 +66,8 @@ const GlobalStyles = createGlobalStyle`
         }
     }
 
-    input, select {
-        padding-left: 10px;
+    input, select, textarea {
+        padding: 2px 5px;
     }
 
     button {
@@ -83,6 +85,10 @@ const GlobalStyles = createGlobalStyle`
             border-color: var(--dark-blue);
             background-color: var(--blue);
         }
+    }
+
+    textarea {
+        resize: none;
     }
 
 
@@ -127,6 +133,7 @@ const GlobalStyles = createGlobalStyle`
         background-position: center center;
         object-fit: cover;
         border-radius: 12px;
+        box-shadow: 3px 3px rgb(0, 0, 0, 0.05);
     }
 
     .canvasImage {

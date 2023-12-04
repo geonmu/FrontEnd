@@ -5,9 +5,11 @@ import styled from 'styled-components';
 import Profile from '../components/minihompy/Profile';
 import Home from '../components/minihompy/Home';
 import Diary from '../components/minihompy/Diary';
+import Guestbook from '../components/minihompy/Guestbook';
 import Book from '../components/layout/Book'
 
 function MinihompyPage() {
+    
     useEffect(() => {
         userHome();
     }, []);
@@ -33,6 +35,7 @@ function MinihompyPage() {
     const selectComponent = {
         home: <Home />,
         diary: <Diary />,
+        guestbook: <Guestbook />,
     };
 
     return (
@@ -49,8 +52,8 @@ function MinihompyPage() {
             {/* 컨텐츠 영역 */}
             <section className='bookPaper' style={{ backgroundColor: 'var(--light-gray)', display: 'grid', gridTemplateRows: '1fr 12fr', gridGap: '3px', padding: '12px 9px' }}>
                 <ContentsHead>
-                    <span className='fontText headText' style={{ color: 'var(--dark-blue)', fontSize: 24, justifyContent: 'left' }}>광운월드</span>
-                    <span className='fontText headText' style={{ justifyContent: 'right' }}>WELCOME TO KWWORLD!</span>
+                    <span className='fontText headText' style={{ color: 'var(--dark-blue)', fontSize: 24, justifyContent: 'left' }}>{user?.name}'s Minihompy</span>
+                    <span className='fontText headText' style={{ justifyContent: 'right' }}>kwangwoon.world/minihompy/{user?.userId}</span>
                 </ContentsHead>
                 <ContentsBox>
                     <div style={{ margin: '17px auto' }}>
@@ -66,6 +69,11 @@ function MinihompyPage() {
                             className={content === 'diary' ? 'active' : ''}
                             onClick={handleClickButton} name='diary'>
                             다이어리
+                        </MenuButton>
+                        <MenuButton
+                            className={content === 'guestbook' ? 'active' : ''}
+                            onClick={handleClickButton} name='guestbook'>
+                            방명록
                         </MenuButton>
                     </Menu>
                 </ContentsBox>
@@ -106,9 +114,9 @@ const Background = styled.div`
 
 const ContentsHead = styled.div`
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 2fr;
 
-    padding: 0px 6px;
+    padding: 0px 10px;
 `;
 
 const ContentsBox = styled.div`

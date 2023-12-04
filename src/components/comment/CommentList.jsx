@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { __deleteComment, __editSave, __getComment } from "../../redux/module/comments";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Alert } from '../../shared/Alert';
 
 function CommentList({ diaryId }) {
   const [disable, setDisable] = useState(true);
@@ -20,12 +21,9 @@ function CommentList({ diaryId }) {
   };
 
   const onDelete = (commentId) => {
-    const result = window.confirm("정말 삭제하시겠습니까? 😢");
-    if (!result) return;
     dispatch(__deleteComment({ commentId, diaryId }));
-    Swal.fire({
-      icon: "success",
-      title: "삭제 완료!",
+    Alert({
+      html: "삭제 완료!",
     });
     dispatch(__getComment(param));
   };
@@ -37,9 +35,8 @@ function CommentList({ diaryId }) {
   const EditSave = (commentId) => {
     dispatch(__editSave({ commentId, diaryId, ...input }));
     setDisable(true);
-    Swal.fire({
-      icon: "success",
-      title: "수정 완료!",
+    Alert({
+      html: "수정 완료!",
     });
     dispatch(__getComment(param));
   };
@@ -98,13 +95,14 @@ const CommentBox = styled.div`
   column-gap: 5px;
   align-items: center;
 
-  height: 35px;
+  height: 30px;
   background-color: var(--light-gray);
   border-radius: 5px;
   margin-top: 5px;
   
   input {
-    height: 25px;
+    font-size: 0.8rem;
+    height: 18px;
   }
   span {
     font-weight: 700;

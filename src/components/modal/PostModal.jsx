@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import "./PostModal.css";
@@ -6,8 +5,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { __getDiary } from "../../redux/module/diaries";
 import { useParams } from "react-router-dom";
-import { getCookie } from "../../shared/Cookies";
-import Swal from "sweetalert2";
+import { Alert } from '../../shared/Alert';
 
 const PostModal = (props) => {
   const SERVER = process.env.REACT_APP_SERVER;
@@ -21,19 +19,8 @@ const PostModal = (props) => {
   const dispatch = useDispatch();
   const param = useParams().userId;
 
-  const [imagePreview, setImagePreview] = useState("");
-  const image = watch("dirImg");
-  useEffect(() => {
-    if (image && image.length > 0) {
-      const file = image[0];
-      setImagePreview(URL.createObjectURL(file));
-    }
-  }, [image]);
-
   // 포스트 등록
   const onSubmit = async (data) => {
-    const accessToken = getCookie("accessToken");
-    const refreshToken = getCookie("refreshToken");
     const diaryNo = allDiaryId.length + 1;
     const content = data.content;
     const dirImg = data.dirImg[0];
@@ -46,16 +33,14 @@ const PostModal = (props) => {
         withCredentials: true
       })
       .then((res) => {
-        Swal.fire({
-          icon: "success",
-          title: `${res.data.msg}`,
+        Alert({
+          html: `${res.data.msg}`,
         });
       })
       .catch((e) => {
         console.log("e", e);
-        Swal.fire({
-          icon: "error",
-          title: `${e.response.data.err}`,
+        Alert({
+          html: `${e.response.data.err}`,
         });
       });
     close();
@@ -68,9 +53,7 @@ const PostModal = (props) => {
         <section>
           <main>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <img alt="preview" src={imagePreview} style={{ maxWidth: "400px", marginRight: "9999px" }} />
-              <UploadLabel htmlFor="picture">업로드</UploadLabel>
-              <ImageInput
+              <input
                 type="file"
                 id="picture"
                 accept="image/*"
@@ -108,38 +91,6 @@ const PostModal = (props) => {
 };
 
 export default PostModal;
-
-const UploadLabel = styled.label`
-  width: 70px;
-  height: 30px;
-  display: inline-block;
-  margin: 5px auto auto auto;
-  padding: 9px;
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 5px;
-  background-color: lightblue;
-  color: #ffffff;
-  font-size: 0.8rem;
-  cursor: pointer;
-
-  :hover {
-    background-color: #ffffff;
-    color: #000000;
-    transition: 0.8s;
-  }
-`;
-
-const ImageInput = styled.input`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-`;
 
 const InputBox = styled.div``;
 

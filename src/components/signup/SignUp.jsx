@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import Swal from "sweetalert2";
 import styled from "styled-components";
+import { Alert } from '../../shared/Alert';
 
 function SignUp() {
   useEffect(() => {
@@ -60,46 +60,25 @@ function SignUp() {
   const ClickCheck = () => {
     const email = watch("email");
     if (email === "") {
-      Swal.fire({
+      Alert({
         html: "이메일을 입력해주세요.",
-        timer: 2000,
-        showConfirmButton: false,
-        timerProgressBar: true,
-        width: 350,
       });
     } else {
       axios
         .post(`${SERVER}/api/users/emailcheck`, { email: email + "@kw.ac.kr" })
         .then((res) => {
           if (res.status === 200) {
-            Swal.fire({
-              html: "사용 가능한 이메일입니다.<br>인증번호를 전송합니다.",
+            Alert({
+              html: '사용 가능한 이메일입니다.<br>인증번호를 전송합니다.',
               timer: 3000,
-              showConfirmButton: false,
-              timerProgressBar: true,
-              width: 350,
             });
             setIsCheck(true);
           }
         })
-        .catch((error) => {
-          if (error.code === "ERR_BAD_REQUEST") {
-            Swal.fire({
-              html: "이미 사용 중인 이메일입니다.<br>다른 이메일로 시도해주세요.",
-              timer: 2000,
-              showConfirmButton: false,
-              timerProgressBar: true,
-              width: 350,
-            });
-          } else {
-            Swal.fire({
-              html: "오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.",
-              timer: 2000,
-              showConfirmButton: false,
-              timerProgressBar: true,
-              width: 350,
-            });
-          }
+        .catch(() => {
+          Alert({
+            html: '사용할 수 없는 이메일입니다.<br>다른 이메일로 시도해주세요.',
+          });
           setIsCheck(false);
         });
     }
@@ -110,21 +89,13 @@ function SignUp() {
     const certificationNum = watch("certificationNum");
 
     if (isCheck === false) {
-      Swal.fire({
+      Alert({
         html: "이메일 중복 확인을 해주세요.",
-        timer: 2000,
-        showConfirmButton: false,
-        timerProgressBar: true,
-        width: 350,
       });
     } else {
       if (certificationNum === "") {
-        Swal.fire({
+        Alert({
           html: "인증번호를 입력해주세요.",
-          timer: 2000,
-          showConfirmButton: false,
-          timerProgressBar: true,
-          width: 350,
         });
       } else {
         axios
@@ -134,34 +105,17 @@ function SignUp() {
           })
           .then((res) => {
             if (res.status === 200) {
-              Swal.fire({
-                html: "인증 되었습니다.",
+              Alert({
+                html: "인증되었습니다.",
                 timer: 3000,
-                showConfirmButton: false,
-                timerProgressBar: true,
-                width: 350,
               });
               setIsAuth(true);
             }
           })
-          .catch((error) => {
-            if (error.code === "ERR_BAD_REQUEST") {
-              Swal.fire({
-                html: "인증번호가 올바르지 않습니다.",
-                timer: 2000,
-                showConfirmButton: false,
-                timerProgressBar: true,
-                width: 350,
-              });
-            } else {
-              Swal.fire({
-                html: "오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.",
-                timer: 2000,
-                showConfirmButton: false,
-                timerProgressBar: true,
-                width: 350,
-              });
-            }
+          .catch(() => {
+            Alert({
+              html: "인증번호가 올바르지 않습니다.",
+            });
             setIsAuth(false);
           });
       }
@@ -171,12 +125,8 @@ function SignUp() {
   //회원가입 데이터 전송
   const ClickSignUp = (data) => {
     if (isCheck === false || isAuth === false) {
-      Swal.fire({
+      Alert({
         html: "이메일 인증을 해주세요.",
-        timer: 2000,
-        showConfirmButton: false,
-        timerProgressBar: true,
-        width: 350,
       });
     } else {
       const { email, certificationNum, ...submitData } = data;
@@ -187,12 +137,9 @@ function SignUp() {
         })
         .then((res) => {
           if (res.status === 201) {
-            Swal.fire({
+            Alert({
               html: "회원가입 완료!<br>잠시 후 창이 자동으로 닫힙니다.",
               timer: 3000,
-              showConfirmButton: false,
-              timerProgressBar: true,
-              width: 350,
             }).then(() => {
               window.close();
             });
@@ -200,12 +147,9 @@ function SignUp() {
         })
         .catch((error) => {
           if (error.code === "ERR_BAD_REQUEST") {
-            Swal.fire({
+            Alert({
               html: "오류가 발생했습니다.<br>잠시 후 다시 시도해주세요.",
               timer: 2000,
-              showConfirmButton: false,
-              timerProgressBar: true,
-              width: 350,
             });
           }
         });
@@ -236,18 +180,6 @@ function SignUp() {
           placeholder="이메일"
           {...register("email", {
             required: "이메일을 입력해주세요.",
-            maxLength: {
-              value: 10,
-              message: "10글자 이하로 작성해주세요",
-            },
-            minLength: {
-              value: 4,
-              message: "4글자 이상으로 작성해주세요",
-            },
-            pattern: {
-              value: /^(?=.*[a-zA-Z])[a-zA-Z0-9]{4,10}$/,
-              message: "형식에 맞지 않는 이메일 입니다.",
-            },
             onChange: () => {
               setIsCheck(false);
               setIsAuth(false);
@@ -334,8 +266,8 @@ function SignUp() {
           {...register("name", {
             required: "이름을 입력해주세요.",
             maxLength: {
-              value: 8,
-              message: "이름은 최대 8글자까지 입력 가능합니다.",
+              value: 6,
+              message: "이름은 최대 6글자까지 입력 가능합니다.",
             },
           })}
         />
