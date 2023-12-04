@@ -50,9 +50,9 @@ const PostModal = (props) => {
   return (
     <div className={open ? "PostModal openModal modal" : "PostModal modal"}>
       {open ? (
-        <section>
-          <main>
+          <section>
             <form onSubmit={handleSubmit(onSubmit)}>
+              <Wrapper>
               <input
                 type="file"
                 id="picture"
@@ -61,29 +61,29 @@ const PostModal = (props) => {
                   required: "이미지를 올리셔야 합니다!",
                 })}
               />
-              <InputBox>
-                <DiaryInput
-                  type="text"
-                  placeholder="내용을 입력해주세요."
+              </Wrapper>
+              <span className="errorMessage">{errors.dirImg?.message}</span>
+              <Wrapper style={{ height: '100px'}}>
+                <textarea
+                  placeholder="내용"
                   {...register("content", {
-                    required: "내용을 입력해주세요!",
+                    required: "내용을 입력해주세요.",
                     maxLength: {
                       value: 100,
-                      message: "100자 이내로 작성해주세요",
+                      message: "100자 이내로 작성해주세요.",
                     },
                   })}
                 />
-                <InputButton>작성</InputButton>
-                <span style={{ color: "red", fontSize: "0.8rem", marginTop: "5px" }}>{errors.content?.message}</span>
-                <span style={{ color: "red", fontSize: "0.8rem", marginTop: "5px" }}>{errors.dirImg?.message}</span>
-              </InputBox>
+                </Wrapper>
+                <span className="errorMessage">{errors.content?.message}</span>
+                
+                <Wrapper style={{ height: '40px', gridTemplateColumns: '1fr 1fr 6fr', columnGap: '10px'}}>
+                <button>작성</button>
+                <button className="close" onClick={close}>
+                  닫기
+                </button>
+                </Wrapper>
             </form>
-          </main>
-          <footer>
-            <button className="close" onClick={close}>
-              close
-            </button>
-          </footer>
         </section>
       ) : null}
     </div>
@@ -102,21 +102,7 @@ const DiaryInput = styled.input`
   font-size: 0.8rem;
 `;
 
-const InputButton = styled.button`
-  width: 54px;
-  height: 30px;
-  margin-left: 10px;
-  margin-top: 19.5px;
-  border-radius: 5px;
-  position: fixed;
-  background-color: lightblue;
-  vertical-align: middle;
-  color: #ffffff;
-  font-size: 0.8rem;
-
-  :hover {
-    background-color: #ffffff;
-    color: #000000;
-    transition: 0.8s;
-  }
+const Wrapper = styled.div`
+  display: grid;
+  margin-top: 10px;
 `;

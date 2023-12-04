@@ -40,8 +40,8 @@ function Profile(props) {
                 <div className='bodyText' style={{ marginTop: '5px' }}>
                     <span>{props.user.name}</span>
                     <span style={{ color: 'var(--dark-gray)', fontSize: 10 }}> {props.user.birth}</span><br/>
-                    <span style={{ color: 'var(--orange)' }}> 소프트웨어학부</span>
-                    <span style={{ color: 'var(--light-orange)', fontSize: 10  }}> 23학번</span>
+                    <span style={{ color: 'var(--orange)' }}> {props.user.department}</span>
+                    <span style={{ color: 'var(--light-orange)', fontSize: 10  }}> {props.user.hb}</span>
                 </div>
             </section>
             <section>

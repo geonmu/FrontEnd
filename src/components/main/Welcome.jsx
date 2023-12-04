@@ -2,6 +2,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { decodeCookie, removeCookie } from '../../shared/Cookies';
 import ProfileImage from '../../images/profile_image.png'
+import { Alert } from "../../shared/Alert";
 
 function Welcome() {
     const SERVER = process.env.REACT_APP_SERVER;
@@ -18,7 +19,7 @@ function Welcome() {
     }
 
     function ClickDotori() {
-        alert('준비중입니다.');
+        Alert('준비중입니다.');
     }
 
     function ClickSurfing() {
@@ -29,10 +30,30 @@ function Welcome() {
     }
 
     function ClickLogout() {
-        removeCookie('accesstoken');
-        removeCookie('refreshtoken');
-        removeCookie('accessToken');
-        removeCookie('refreshToken');
+        //removeCookie('accesstoken');
+        //removeCookie('refreshtoken');
+        //removeCookie('accessToken');
+        //removeCookie('refreshToken');
+
+       axios
+      .post(`${SERVER}/api/users/logout`)
+      .then((res) => {
+        Alert({
+          html: `${res.data.msg}`,
+        })
+      })
+      .catch((e) => {
+        if(e.response.data.errorMessage !== undefined) {
+          Alert({
+            html: `${e.response.data.errorMessage}`,
+          })
+        }
+        else {
+          Alert({
+            html: `${e.response.data.msg}`,
+          })
+        }
+      });
         window.location.reload();
     }
 

@@ -108,14 +108,14 @@ function Home() {
   return (
       <HomeLayout>
         <section style={{ borderBottom: '3px solid var(--light-gray)' }}>
-          <span className='fontText' style={{ fontSize: 24, color: 'var(--blue)' }}>My Canvas</span>
+          <span className='fontText' style={{ fontSize: 24, color: 'var(--blue)' }}>Home</span>
         </section>
         <section>
           <img className='canvasImage' src={ProfileImage} alt='캔버스' style={{ width: '100%' }} />
         </section>
         
           <CommentForm onSubmit={handleSubmit(illChonWrite)}>
-            <span>한줄평</span>
+            <span>일촌평</span>
             <input
               placeholder="별명"
               maxLength='6'
@@ -123,7 +123,7 @@ function Home() {
               {...register("nick")}
             />
             <input
-              placeholder="한줄평을 남겨보세요~!"
+              placeholder="일촌평을 남겨보세요~!"
               minLength='3'
               maxLength='15'
               required
@@ -131,7 +131,7 @@ function Home() {
             />
             <button type="submit">작성</button>
           </CommentForm>
-          <CommentList>
+          <CommentList className='scrollBar'>
             {chon?.map((item) => {
               return (
                 <Comment key={item.ilchonpyungId}>
@@ -205,19 +205,15 @@ const CommentList = styled.div`
   flex-direction: column;
   color: var(--light-black);
   font-size: 0.9rem;
-  overflow: auto;
-  width: 480px;
+  overflow-Y: scroll;
+  width: 500px;
   height: 90px;
   margin: 0px auto;
 `;
 
 
 const Comment = styled.div` 
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-
-  button {
-    margin-right: 3px;
-  }
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+  margin: 0px 5px 5px;
 `;
