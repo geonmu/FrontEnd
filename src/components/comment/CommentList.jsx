@@ -40,6 +40,10 @@ function CommentList({ diaryId }) {
     }
   };
 
+  useEffect(() => {
+    dispatch(__getComment(param));
+  }, [dispatch, param]);
+
 
   return (
     <CommentListBox>
