@@ -66,7 +66,7 @@ function GuestBook() {
                   <span>
                     NO. {item.guestBookNum}
                   </span>
-                    <text
+                    <span
                     style={{ color: 'var(--blue)', cursor: 'pointer' }}
                       onClick={() => {
                         window.location.replace(
@@ -74,7 +74,7 @@ function GuestBook() {
                         );
                       }}>
                         {item.name}
-                      </text>
+                      </span>
                   <span style={{ color: 'var(--light-black)' }}>({item.createdAt})</span>
                   <button
                     onClick={() => {

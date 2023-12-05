@@ -129,7 +129,7 @@ function Home() {
                   <span>
                     ⦁ {item.ilchonpyung}&nbsp;
                     ({item.nick}&nbsp;
-                      <text
+                      <span
                       style={{ fontWeight: '600', color: 'var(--blue)', cursor: 'pointer' }}
                         onClick={() => {
                           window.location.replace(
@@ -137,7 +137,7 @@ function Home() {
                           );
                         }}>
                         {item.name}
-                      </text>
+                      </span>
                     )
                   </span>
                     <button onClick={() => illChonDelete(item.ilchonpyungId)}>
