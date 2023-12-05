@@ -7,6 +7,7 @@ import CommentForm from "../comment/CommentForm";
 import CommentList from "../comment/CommentList";
 import { useParams } from "react-router-dom";
 import { Alert } from '../../shared/Alert';
+import { __getComment } from "../../redux/module/comments";
 
 function Diary() {
   const [Modal, setModal] = useState(false);
@@ -22,26 +23,20 @@ function Diary() {
     setModal(false);
   };
 
-  const onDelete = (diaryId) => {
-    const result = window.confirm("정말 삭제하시겠습니까?");
-    if (!result) return;
-    dispatch(__deleteDiary({ diaryId, param }));
-    Alert({
-      html: '삭제 요청을 전송했습니다.',
-    });
-    dispatch(__getDiary(param));
+  const onDelete = async (diaryId) => {
+    try {
+      await dispatch(__deleteDiary({ diaryId, param }));
+    } catch (error) {
+      console.error("Error deleting diary:", error);
+    }
   };
-
-  useEffect(() => {
-    dispatch(__getDiary(param));
-  }, [dispatch, param]);
 
   return (
     
       <DiaryLayout>
         <section style={{ borderBottom: '3px solid var(--light-gray)', display: 'grid', gridTemplateColumns: '7fr 1fr'  }}>
           <span className='fontText' style={{ fontSize: 24, color: 'var(--blue)' }}>Diary</span>
-          <button onClick={openModal} style={{ height: '20px' }}>글쓰기</button>
+          <button onClick={openModal} style={{ marginTop: '3px', height: '20px' }}>글쓰기</button>
         </section>
         <section className='scrollBar'>
           

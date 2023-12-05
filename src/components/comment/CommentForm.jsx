@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { __addComment, __getComment } from "../../redux/module/comments";
 import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Alert } from "../../shared/Alert";
 
 function CommentForm({ diaryId }) {
   const [input, setInput] = useState({
@@ -13,16 +13,17 @@ function CommentForm({ diaryId }) {
 
   const dispatch = useDispatch();
 
-  const Submit = (e) => {
+  const Submit = async (e) => {
     e.preventDefault();
-    if (input.comment.trim() === "") return alert("댓글을 입력해주세요!");
-    dispatch(__addComment({ ...input, diaryId, param }));
-    Swal.fire({
-      icon: "success",
-      title: "작성 완료!",
-    });
-    dispatch(__getComment(param));
+    if (input.comment.trim() === "") return Alert({html: '댓글을 작성해주세요.'});
+    try {
+      await dispatch(__addComment({ ...input, diaryId, param }));
+      dispatch(__getComment(param));
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
   };
+  
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +31,7 @@ function CommentForm({ diaryId }) {
   };
   return (
       <CommentFormLayout onSubmit={Submit}>
-        <input name="comment" value={input.comment} onChange={onChange} placeholder="댓글을 작성해주세요." />
+        <input name="comment" maxLength={20} value={input.comment} onChange={onChange} placeholder="댓글" />
         <button type='submit'>작성</button>
       </CommentFormLayout>
   );

@@ -16,7 +16,6 @@ function GuestBook() {
     axios
       .get(`${SERVER}/api/guestbooks/${param.userId}`)
       .then((res) => {
-        console.log(res);
         setMyeng(res.data.data);
       })
       .catch((e) => {
@@ -33,13 +32,19 @@ function GuestBook() {
       .then((res) => {
         Alert({
           html: `${res.data.msg}`,
-        });
+        })
       })
       .catch((e) => {
-        console.log(e);
-        Alert({
-          html: `${e.response.data.msg}`,
-        });
+        if(e.response.data.errorMessage !== undefined) {
+          Alert({
+            html: `${e.response.data.errorMessage}`,
+          })
+        }
+        else {
+          Alert({
+            html: `${e.response.data.msg}`,
+          })
+        }
       });
     getBook();
   }
@@ -65,7 +70,7 @@ function GuestBook() {
                     <text
                     style={{ color: 'var(--blue)', cursor: 'pointer' }}
                       onClick={() => {
-                        window.open(
+                        window.location.replace(
                           `/minihompy/${item.writerId}`
                         );
                       }}>

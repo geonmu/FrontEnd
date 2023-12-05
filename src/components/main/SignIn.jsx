@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { setCookie, removeCookie } from '../../shared/Cookies';
-import { useNavigate } from 'react-router-dom';
+import { setCookie } from '../../shared/Cookies';
+import { Alert } from "../../shared/Alert";
 
 function SignIn() {
     const {
@@ -11,10 +12,10 @@ function SignIn() {
         formState: { errors },
     } = useForm({mode: 'onSubmit'});
 
-    const navigate = useNavigate();
+    const SERVER = process.env.REACT_APP_SERVER;
     
+
     const ClickSignIn = (data) => {
-        const SERVER = process.env.REACT_APP_SERVER;
 
         axios
         .post(`${SERVER}/api/users/login`, data, { withCredentials: true }).then((res) => {
@@ -26,13 +27,13 @@ function SignIn() {
             }
             
         })
-        .catch((error) => {
-            if (error.code === "ERR_BAD_REQUEST") {
-                console.log('error');
-            }
+        .catch(() => {
+            Alert({
+                html: '로그인 중 오류가 발생했습니다.',
+            })
         });
     }
-
+    
     return (
         <SignInLayout onSubmit={handleSubmit(ClickSignIn)}>
             <Wrapper>

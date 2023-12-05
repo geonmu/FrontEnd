@@ -77,6 +77,16 @@ function MinihompyPage() {
                 </ContentsBox>
             </section>
         </Book>
+        <div className="cincopa_responsive_wrapper" style={{ position: "relative" }}>
+          <iframe
+            style={{ boxShadow: '3px 3px 3px rgb(0, 0, 0, 0.3)',  margin: '80px 40px' }}
+            height='130px'
+            width='220px'
+            src="https://rt.cincopa.com/iframe.aspx?fid=AEFAQ6-DR_-Q"
+            scrolling="no"
+            allow="autoplay *"
+          />
+        </div>
         </Background>
     </MinihompyPageLayout>
     );

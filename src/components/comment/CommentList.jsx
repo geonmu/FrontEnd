@@ -19,30 +19,29 @@ function CommentList({ diaryId }) {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
-  const onDelete = (commentId) => {
-    dispatch(__deleteComment({ commentId, diaryId }));
-    Alert({
-      html: "삭제 완료!",
-    });
-    dispatch(__getComment(param));
+  const onDelete = async (commentId) => {
+    try {
+      await dispatch(__deleteComment({ commentId, diaryId }));
+      dispatch(__getComment(param));
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
   };
-
+  
   const onEdit = () => {
     setDisable(false);
   };
-
-  const EditSave = (commentId) => {
-    dispatch(__editSave({ commentId, diaryId, ...input }));
-    setDisable(true);
-    Alert({
-      html: "수정 완료!",
-    });
-    dispatch(__getComment(param));
+  
+  const EditSave = async (commentId) => {
+    try {
+      await dispatch(__editSave({ commentId, diaryId, ...input }));
+      setDisable(true);
+      dispatch(__getComment(param));
+    } catch (error) {
+      console.error("Error editing comment:", error);
+    }
   };
 
-  useEffect(() => {
-    dispatch(__getComment(param));
-  }, [dispatch, param]);
 
   return (
     <CommentListBox>
@@ -51,6 +50,7 @@ function CommentList({ diaryId }) {
           <CommentBox key={comm.commentId}>
             <input readOnly value={comm.name}></input>
             <input onChange={onChange} name='comment' placeholder={comm.comment} value={input.comment} disabled={disable} />
+            {/* 
             {disable ? (
               <button onClick={onEdit}>수정</button>
             ) : (
@@ -59,6 +59,7 @@ function CommentList({ diaryId }) {
               }}
               >저장</button>
             )}
+            */}
             {disable ? (
                 <button
                   onClick={() => {onDelete(comm.commentId);}}
@@ -90,7 +91,7 @@ const CommentListBox = styled.div`
 const CommentBox = styled.div`
   display: grid;
   padding: 0px 15px;
-  grid-template-columns: 3fr 12fr 2fr 2fr;
+  grid-template-columns: 3fr 12fr 2fr;
   column-gap: 5px;
   align-items: center;
 

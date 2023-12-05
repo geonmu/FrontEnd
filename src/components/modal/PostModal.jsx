@@ -38,10 +38,16 @@ const PostModal = (props) => {
         });
       })
       .catch((e) => {
-        console.log("e", e);
-        Alert({
-          html: `${e.response.data.err}`,
-        });
+        if(e.response.data.errorMessage !== undefined) {
+          Alert({
+            html: `${e.response.data.errorMessage}`,
+          })
+        }
+        else {
+          Alert({
+            html: `${e.response.data.err}`,
+          })
+        }
       });
     close();
     dispatch(__getDiary(param));
@@ -58,7 +64,7 @@ const PostModal = (props) => {
                 id="picture"
                 accept="image/*"
                 {...register("dirImg", {
-                  required: "이미지를 올리셔야 합니다!",
+                  required: "이미지를 첨부해주세요.",
                 })}
               />
               </Wrapper>
@@ -77,9 +83,9 @@ const PostModal = (props) => {
                 </Wrapper>
                 <span className="errorMessage">{errors.content?.message}</span>
                 
-                <Wrapper style={{ height: '40px', gridTemplateColumns: '1fr 1fr 6fr', columnGap: '10px'}}>
-                <button>작성</button>
-                <button className="close" onClick={close}>
+                <Wrapper style={{ height: '30px', gridTemplateColumns: '2fr 1fr', columnGap: '250px'}}>
+                <button type='submit' className="primaryButton">작성</button>
+                <button type='button' onClick={close}>
                   닫기
                 </button>
                 </Wrapper>
@@ -92,17 +98,9 @@ const PostModal = (props) => {
 
 export default PostModal;
 
-const InputBox = styled.div``;
-
-const DiaryInput = styled.input`
-  width: 354px;
-  padding: 5px;
-  margin-top: 20px;
-  border-radius: 5px;
-  font-size: 0.8rem;
-`;
-
 const Wrapper = styled.div`
   display: grid;
   margin-top: 10px;
+
+  height: 34px;
 `;

@@ -79,28 +79,16 @@ function EditPage() {
         }
 
     return (
-      <>
-      
       <EditPageLayout>
-
+        <Background>
         <EditLayout className='bookPaper'>
             <span className='headText' style={{ fontSize: 24, fontWeight: 'bold', alignItems: 'center', marginBottom: '30px' }}>프로필 편집</span>
 
-
-            <Wrapper style={{ gridTemplateColumns: '3fr 1fr'}}>
-            <input
-                placeholder="인트로"
-                maxLength='30'
-                {...register("intro")}
-            />
-                <button className='primaryButton' type='button' onClick={() => ClickIntroSave({ intro: getValues("intro") })}>인트로 저장</button>
-            </Wrapper>
-
-            <Wrapper style={{ gridTemplateColumns: '2fr 1fr'}}>
+            <label>Today Is...</label>
+            <Wrapper style={{ gridTemplateColumns: '4fr 1fr'}}>
             <select
                 defaultValue='행복😊'
                 {...register('sixwords', {
-                    required: 'Today Is... 값을 선택해주세요.'
                 })}
             >
                 <optgroup label='Today Is...'>
@@ -111,7 +99,17 @@ function EditPage() {
                 </optgroup>
             </select>
             
-                <button className='primaryButton' type='button' onClick={() => ClickTodayIsSave({ sixwords: getValues("sixwords") })}>Today Is 저장</button>
+                <button className='primaryButton' type='button' onClick={() => ClickTodayIsSave({ sixwords: getValues("sixwords") })}>저장</button>
+            </Wrapper>
+
+            <label>자기소개글</label>
+            <Wrapper style={{ gridTemplateColumns: '4fr 1fr' }}>
+            <input
+                placeholder="내용"
+                maxLength='30'
+                {...register("intro")}
+            />
+                <button className='primaryButton' type='button' onClick={() => ClickIntroSave({ intro: getValues("intro") })}>저장</button>
             </Wrapper>
             
             
@@ -289,13 +287,13 @@ function EditPage() {
              
             */}
             
-            <Wrapper>
+            <Wrapper style={{ marginTop: '10px' }}>
                 <button className='primaryButton' type='button' onClick={() => ClickSave()}>캔버스 저장</button>
             </Wrapper>
             
         </EditLayout>
+        </Background>
         </EditPageLayout>
-        </>
     );
 }
 
@@ -311,6 +309,24 @@ const EditPageLayout = styled.div`
   display: flex;
   justify-content: center;
   align-content: center;
+`;
+
+const Background = styled.div`
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    background-size: 30px 30px;
+    background-image:
+      linear-gradient(to right, var(--gray) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--gray) 1px, transparent 1px);
+    background-color: var(--dark-gray);
 `;
 
 const EditLayout = styled.form`
@@ -330,5 +346,4 @@ const Wrapper = styled.div`
     display: grid;
     column-gap: 5px;
     height: 40px;
-    margin-top: 10px;
 `;

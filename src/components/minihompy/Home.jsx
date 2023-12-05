@@ -2,9 +2,8 @@ import styled from "styled-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { getCookie, decodeCookie } from "../../shared/Cookies";
 import { useParams } from "react-router-dom";
-import ProfileImage from '../../images/profile_image.png'
+import ProfileImage from '../../images/minihome/minihome.png'
 import { Alert } from "../../shared/Alert";
 
 function Home() {
@@ -124,7 +123,6 @@ function Home() {
             />
             <input
               placeholder="일촌평을 남겨보세요~!"
-              minLength='3'
               maxLength='15'
               required
               {...register("ilchonpyung")}
@@ -141,7 +139,7 @@ function Home() {
                       <text
                       style={{ fontWeight: '600', color: 'var(--blue)', cursor: 'pointer' }}
                         onClick={() => {
-                          window.open(
+                          window.location.replace(
                             `/minihompy/${item.writerId}`
                           );
                         }}>

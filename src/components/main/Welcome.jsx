@@ -6,12 +6,10 @@ import { Alert } from "../../shared/Alert";
 
 function Welcome() {
     const SERVER = process.env.REACT_APP_SERVER;
-
     const decode = decodeCookie("accessToken");
-    console.log(decode);
 
     function ClickMyMinihompy() {
-        window.open(`/minihompy/${decode.userId}`, '_blank', 'width=1200px height=800px toolbar=no resizable=no status=no menubar=no');
+        window.open(`/minihompy/${decode.userId}`, '_blank', 'width=1400px height=700px toolbar=no resizable=no status=no menubar=no');
     }
 
     function ClickEdit() {
@@ -19,42 +17,40 @@ function Welcome() {
     }
 
     function ClickDotori() {
-        Alert('준비중입니다.');
+        Alert({
+            html: '준비중입니다.',
+        });
     }
 
     function ClickSurfing() {
         axios.get(`${SERVER}/api/users/surfing`).then((res) => {
             const random = res.data.data;
-            window.open(`/minihompy/${random.userId}`, '_blank', 'width=1200px height=800px toolbar=no resizable=no status=no menubar=no');
+            window.open(`/minihompy/${random.userId}`, '_blank', 'width=1400px height=700px toolbar=no resizable=no status=no menubar=no');
         });
     }
 
     function ClickLogout() {
-        removeCookie('accesstoken');
-        removeCookie('refreshtoken');
+        axios.post(`${SERVER}/api/users/logout`, null, { withCredentials: true })
+        .then((res) => {
+          if (res.status === 200) {
+            Alert({
+              html: '로그아웃 되었습니다.',
+              timer: 3000,
+            }).then(() => {
+                window.location.reload();
+              })
+          }
+        })
+        .catch(() => {
+          Alert({
+            html: '로그아웃 중 오류가 발생했습니다.',
+          }).then(() => {
+            window.location.reload();
+          })
+        });
+
         removeCookie('accessToken');
         removeCookie('refreshToken');
-
-       axios
-      .post(`${SERVER}/api/users/logout`)
-      .then((res) => {
-        Alert({
-          html: `${res.data.msg}`,
-        })
-      })
-      .catch((e) => {
-        if(e.response.data.errorMessage !== undefined) {
-          Alert({
-            html: `${e.response.data.errorMessage}`,
-          })
-        }
-        else {
-          Alert({
-            html: `${e.response.data.msg}`,
-          })
-        }
-      });
-        window.location.reload();
     }
 
     return (
