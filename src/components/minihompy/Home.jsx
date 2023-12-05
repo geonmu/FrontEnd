@@ -18,13 +18,6 @@ function Home() {
   //const accessToken = getCookie("accessToken");
   //const refreshToken = getCookie("refreshToken");
 
-
-  function illChonGet() {
-    axios.get(`${SERVER}/api/bests/${param.userId}`).then((res) => {
-      setChon(res.data.data);
-    });
-  }
-
   //일촌평 작성하기
   async function illChonWrite(data) {
     await axios

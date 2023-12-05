@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -12,16 +11,15 @@ function SignIn() {
         formState: { errors },
     } = useForm({mode: 'onSubmit'});
 
-    const SERVER = process.env.REACT_APP_SERVER;
-    
 
     const ClickSignIn = (data) => {
+        const SERVER = process.env.REACT_APP_SERVER;
 
         axios
         .post(`${SERVER}/api/users/login`, data, { withCredentials: true }).then((res) => {
             if (res.statusText === "OK") {
-                setCookie('accessToken', res.data.accesstoken);
-                setCookie('refreshToken', res.data.refreshtoken); 
+                setCookie('accessToken', res.data.accesstoken, {});
+                setCookie('refreshToken', res.data.refreshtoken, {}); 
                 window.location.reload();
                 // navigate('/');
             }
@@ -33,7 +31,7 @@ function SignIn() {
             })
         });
     }
-    
+
     return (
         <SignInLayout onSubmit={handleSubmit(ClickSignIn)}>
             <Wrapper>

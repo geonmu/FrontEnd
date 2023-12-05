@@ -79,10 +79,11 @@ function MinihompyPage() {
         </Book>
         <div className="cincopa_responsive_wrapper" style={{ position: "relative" }}>
           <iframe
+            title='뮤직 플레이어'
             style={{ boxShadow: '3px 3px 3px rgb(0, 0, 0, 0.3)',  margin: '80px 40px' }}
-            height='130px'
-            width='220px'
-            src="https://rt.cincopa.com/iframe.aspx?fid=AEFAQ6-DR_-Q"
+            height='157px'
+            width='250px'
+            src="https://rtcdn.cincopa.com/iframe.aspx?fid=AsPAgFfP0e1z"
             scrolling="no"
             allow="autoplay *"
           />

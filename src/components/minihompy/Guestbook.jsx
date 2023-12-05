@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Alert } from '../../shared/Alert';
-import ProfileImage from '../../images/profile_image.png'
 
 function GuestBook() {
   const SERVER = process.env.REACT_APP_SERVER;
