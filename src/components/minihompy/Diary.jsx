@@ -30,6 +30,11 @@ function Diary() {
     }
   };
 
+  useEffect(() => {
+    dispatch(__getDiary(param));
+  }, [dispatch, param]);
+
+
   return (
     
       <DiaryLayout>
