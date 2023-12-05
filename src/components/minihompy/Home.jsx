@@ -206,5 +206,5 @@ const CommentList = styled.div`
 const Comment = styled.div` 
   display: grid;
   grid-template-columns: 9fr 1fr;
-  margin: 0px 5px 5px;
+  margin: 1px 5px 4px;
 `;
