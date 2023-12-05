@@ -65,9 +65,9 @@ function EditPage() {
         .then((res) => {
             Alert({
             html: `${res.data.msg}`,
-            }).catch(() => {
-            });
-        })
+            })
+        }).catch(() => {
+        });
         }
     }
 
@@ -78,9 +78,9 @@ function EditPage() {
             .then((res) => {
                 Alert({
                 html: `${res.data.msg}`,
-                }).catch(() => {
-                });
-            })
+                })
+            }).catch(() => {
+            });
             }
         }
 
