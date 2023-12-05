@@ -24,7 +24,6 @@ function CommentList({ diaryId }) {
       await dispatch(__deleteComment({ commentId, diaryId }));
       dispatch(__getComment(param));
     } catch (error) {
-      console.error("Error deleting comment:", error);
     }
   };
   
@@ -38,7 +37,6 @@ function CommentList({ diaryId }) {
       setDisable(true);
       dispatch(__getComment(param));
     } catch (error) {
-      console.error("Error editing comment:", error);
     }
   };
 

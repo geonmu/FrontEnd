@@ -32,7 +32,7 @@ function EditPage() {
     
     const SERVER = process.env.REACT_APP_SERVER;
     const decode = decodeCookie("accessToken");
-
+    
     const canvasRef = useRef(null);
     const [brushRadius, setBrushRadius] = useState(2);
     const [brushColor, setBrushColor] = useState('#000000');
@@ -59,23 +59,29 @@ function EditPage() {
 
 
     function ClickIntroSave(data) {
-    axios
-      .put(`${SERVER}/api/users/myhome/${decode.userId}`, data, { withCredentials: true })
-      .then((res) => {
-        Alert({
-          html: `${res.data.msg}`,
-        });
-      })
+        if (decode !== null) {
+        axios
+        .put(`${SERVER}/api/users/myhome/${decode.userId}`, data, { withCredentials: true })
+        .then((res) => {
+            Alert({
+            html: `${res.data.msg}`,
+            }).catch(() => {
+            });
+        })
+        }
     }
 
     function ClickTodayIsSave(data) {
-        axios
-          .put(`${SERVER}/api/users/myhome/today/${decode.userId}`, data, { withCredentials: true })
-          .then((res) => {
-            Alert({
-              html: `${res.data.msg}`,
-            });
-          })
+        if (decode !== null) {
+            axios
+            .put(`${SERVER}/api/users/myhome/today/${decode.userId}`, data, { withCredentials: true })
+            .then((res) => {
+                Alert({
+                html: `${res.data.msg}`,
+                }).catch(() => {
+                });
+            })
+            }
         }
 
     return (
@@ -286,10 +292,14 @@ function EditPage() {
             {errors.confirm && <span className='errorMessage'>{errors.confirm.message}</span>}
              
             */}
+
+            {/*
             
             <Wrapper style={{ marginTop: '10px' }}>
                 <button className='primaryButton' type='button' onClick={() => ClickSave()}>캔버스 저장</button>
             </Wrapper>
+
+            */}
             
         </EditLayout>
         </Background>

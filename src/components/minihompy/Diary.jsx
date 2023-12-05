@@ -27,7 +27,6 @@ function Diary() {
     try {
       await dispatch(__deleteDiary({ diaryId, param }));
     } catch (error) {
-      console.error("Error deleting diary:", error);
     }
   };
 

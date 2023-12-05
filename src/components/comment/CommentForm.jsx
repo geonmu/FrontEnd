@@ -20,7 +20,6 @@ function CommentForm({ diaryId }) {
       await dispatch(__addComment({ ...input, diaryId, param }));
       dispatch(__getComment(param));
     } catch (error) {
-      console.error("Error adding comment:", error);
     }
   };
   
