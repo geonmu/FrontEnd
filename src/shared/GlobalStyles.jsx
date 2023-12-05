@@ -23,6 +23,8 @@ const GlobalStyles = createGlobalStyle`
 
         --dark-blue: #3c6c7c;
         --blue: #4a93ba;
+
+        --pink: #ff69b4;
     }
 
     html, body, input, button, select, option, textarea {

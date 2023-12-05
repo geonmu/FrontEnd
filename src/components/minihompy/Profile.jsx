@@ -16,6 +16,9 @@ function Profile(props) {
         //window.location.replace(`/minihompy/${random}`);
     }
 
+    const genderEmoji = props.user.gender === "남자" ? "♂️" : "♀️";
+    const genderEmojiColor = props.user.gender === "남자" ? "var(--blue)" : "var(--pink)";
+
     return(
         <ProfileBox>
             <section>
@@ -35,10 +38,11 @@ function Profile(props) {
                     <span style={{ color: 'var(--dark-blue)' }}>▶</span>History
                 </History>
                 <div className='bodyText' style={{ marginTop: '5px' }}>
-                    <span>{props.user.name}</span>
-                    <span style={{ color: 'var(--dark-gray)', fontSize: 10 }}> {props.user.birth}</span><br/>
-                    <span style={{ color: 'var(--orange)' }}> {props.user.department}</span>
-                    <span style={{ color: 'var(--light-orange)', fontSize: 10  }}> {props.user.hb}</span>
+                    <span>{props.user.name}&nbsp;</span>
+                    <span style={{ color: genderEmojiColor, fontWeight: 600 }}>{genderEmoji}&nbsp;</span>
+                    <span style={{ color: 'var(--light-black)', fontSize: 10 }}>{props.user.birth}</span><br/>
+                    <span style={{ color: 'var(--orange)' }}>{props.user.department}&nbsp;</span>
+                    <span style={{ color: 'var(--light-orange)', fontSize: 10  }}>{props.user.hb}</span>
                 </div>
             </section>
             <section>
