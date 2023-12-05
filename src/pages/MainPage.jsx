@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { decodeCookie } from '../shared/Cookies';
+import { getCookie, decodeCookie } from '../shared/Cookies';
 import SignIn from '../components/main/SignIn'
 import Welcome from '../components/main/Welcome'
 import Book from '../components/layout/Book';
@@ -17,7 +17,7 @@ let backgroundImages = [Background1, Background2, Background3];
 
 
 function MainPage() {
-  const decode = decodeCookie("accessToken");
+  const token = getCookie('accessToken');
   
   const backgroundPreload = () => {
     for(let i  = 0; i < backgroundImages.length; i++) {
@@ -40,9 +40,9 @@ function MainPage() {
         <Book display='grid'>
           <div className='bookPaper' style={{ display: 'grid', gridTemplateRows: '1fr 6fr'}}>
             { 
-              Number(decode?.userId) ? // 쿠키로 로그인여부 판별
+              (token !== undefined) ? // 쿠키로 로그인여부 판별
               <>
-              <span className='headText' style={{ fontSize: 24, fontWeight: 'bold' }}>{decode?.name}님 반갑습니다!</span>
+              <span className='headText' style={{ fontSize: 24, fontWeight: 'bold' }}>{decodeCookie('accessToken')?.name}님 반갑습니다!</span>
               <Welcome />
               </>
               :
